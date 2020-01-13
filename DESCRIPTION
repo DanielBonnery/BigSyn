@@ -1,0 +1,25 @@
+Package: BigSyn
+Type: Package
+Title: X
+Version: 1.0 
+Date: 2020-01-13
+Author: D. Bonnery
+Maintainer: D. Bonnery  <dbonnery@umd.edu>
+Description: Data
+Remotes: tidyverse/magrittr
+Depends: devtools,
+	RODBC,
+	ggplot2,
+	sqldf,
+	lattice,
+	printr,
+	knitr,
+	reshape2,
+	data.table,
+	rlist,
+	haven,
+	sas7bdat,
+	partykit
+License: GPL (>= 2)
+LazyLoad: yes
+LazyData: true
