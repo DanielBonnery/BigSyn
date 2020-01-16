@@ -23,3 +23,4 @@ Depends: devtools,
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: true
+RoxygenNote: 7.0.2
