@@ -32,16 +32,18 @@ treetopdf<-function(partykitctree,savepath){
   dev.off()
 }
 
-#' compilefits
+#' Save a pdf image of each regression tree grown in the modeling phase and discard useless information
+#' 
 #' @param Sparameters: a list, that has the same structure than the outputs of
 #' @param fitmodelsavepath: a file path where to store the pdf of the plot
 #' @param pdfpath where to save the pdfs
 #' @param .progress: a string, name of the progress bar to use, see plyr::create_progress_bar
 #' @description For each element of save parameters, look at the tree and produces the corresponding pdf.  It also removes all the information that is stored in the ouptut of parykit::Ctree, e.g. the data. It only keeps the tree and the rules to get it.
-#' @details depends on plyr
+#' @details Depends on plyr. Partykit output contain all the data that was used to grow the tree. this function removes the unwanted information.
 #' @examples
 #' y=iris$Species;x=iris[,-5]
 #' partykitctree <- partykit::ctree(y ~ ., data=cbind(y=y,x))
+
 compilefits<-function(Sparameters,
                       fitmodelsavepath,
                       pdfpath=fitmodelsavepath,

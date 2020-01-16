@@ -26,12 +26,18 @@ a list.
 Function to fit the model.
 }
 \examples{
-
+#Load the data
 data(TtableA,package="BigSyn")
+#define parameters
 Sparameters<-Sparameters.default.f(ref.table=TtableA)
-Sparameters_i<-Sparameters[[53]]; fitmodelsavepath=NULL; TtableANAto0<-NAto0(TtableA);redocomputationsevenifexists=FALSE
+Sparameters_i<-Sparameters[[53]]; 
+fitmodelsavepath<-NULL; 
+TtableANAto0<-NAto0(TtableA);
+redocomputationsevenifexists<-FALSE
 treeplotsavefolder=tempdir()
-fitthemodel(Sparameters_i,fitmodelsavepath = NULL,TtableANAto0 = TtableANAto0,treeplotsavefolder=tempdir())
+#fit the model:
+fitthemodel(Sparameters_i,fitmodelsavepath = NULL,TtableANAto0 = TtableANAto0,
+            treeplotsavefolder=tempdir())
 Sparameters_i<-Sparameters[["AA.present_La_La_Lrn1"]]; 
 treeplotsavefolder=tempdir()
 fitthemodel(Sparameters_i,NULL,TtableANAto0,treeplotsavefolder=tempdir())

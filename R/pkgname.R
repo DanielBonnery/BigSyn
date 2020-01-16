@@ -7,12 +7,24 @@
 
 
 
-#' BigSyn: Some non confidential functions developped for the MLDSCR synthetic data project
+#' BigSyn: Some non confidential R functions developped for the MLDSC synthetic data project
 #'
 #' The BigSyn package allows to synthesize big hierarchical databases by opposition to just a single small "rectangular" table.
-#'  
+#'  The general idea is to
+#'   - provide tools to transpose the data and back transpose the synthetic version of the transposed data.
+#'   - provide a synthetisation procedure that runs the modeling and the sampling separately
+#'   - provide tools to operate a reasonable pre-selection of predictors.
+#'   - provide tools to visualize the synthetisation.
 #' @section BigSyn functions:
-#' The BigSyn functions are
+#' The main BigSyn functions are
+#' SDPSYN2
+#' Generaltransposefunction
+#' GeneralReversetransposefunction
+#' 
+#' @section Shiny Shiny application
+#' runCompare() launches a shiny application to 
+#'
+#'@section General approach
 #'
 #' @docType package
 #' @name BigSyn

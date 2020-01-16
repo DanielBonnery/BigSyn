@@ -45,6 +45,9 @@ variablesplit6<-function(){
 #' @param listofpackage2 a vector of character strings
 #' @param package1 a character string
 #' @param package2 a character string
+#' @param data1 a dataframe
+#' @param data2 a dataframe
+#' @param Sparameters 
 #' @description Shiny App to visualize regression trees and compare synthetic vs non synthetic data
 #' @export
 #' @examples
@@ -52,6 +55,8 @@ variablesplit6<-function(){
 #' package2<-NULL
 #' runCompare()
 runCompare<-function(
+  data1=NULL,
+  data2=NULL,
   listofpackage1=installed.packages()[,"Package"],
   listofpackage2=installed.packages()[,"Package"],
   package1=if(is.element("BigSyn",listofpackage1)){"BigSyn"}else{listofpackage1[1]},

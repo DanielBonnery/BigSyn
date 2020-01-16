@@ -2,7 +2,7 @@
 % Please edit documentation in R/compilefits.R
 \name{compilefits}
 \alias{compilefits}
-\title{compilefits}
+\title{Save a pdf image of each regression tree grown in the modeling phase and discard useless information}
 \usage{
 compilefits(
   Sparameters,
@@ -24,7 +24,7 @@ compilefits(
 For each element of save parameters, look at the tree and produces the corresponding pdf.  It also removes all the information that is stored in the ouptut of parykit::Ctree, e.g. the data. It only keeps the tree and the rules to get it.
 }
 \details{
-depends on plyr
+Depends on plyr. Partykit output contain all the data that was used to grow the tree. this function removes the unwanted information.
 }
 \examples{
 y=iris$Species;x=iris[,-5]
