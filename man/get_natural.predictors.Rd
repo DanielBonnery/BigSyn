@@ -14,8 +14,6 @@ get_natural.predictors(x, variables = x, predictors = NULL)
 \item{cells}{a vector of character strings containing the potential predecessors}
 
 \item{marginpos}{a vector of integers}
-
-\item{x}{a vector of character strings}
 }
 \value{
 a vector of character strings

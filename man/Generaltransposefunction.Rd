@@ -4,8 +4,12 @@
 \alias{Generaltransposefunction}
 \title{General Transpose function}
 \usage{
-Generaltransposefunction(tableA, id1, id2,
-  origin = deparse(substitute(tableA)))
+Generaltransposefunction(
+  tableA,
+  id1,
+  id2,
+  origin = deparse(substitute(tableA))
+)
 }
 \arguments{
 \item{id1}{A list of variables (rows)}

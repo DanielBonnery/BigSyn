@@ -40,17 +40,22 @@ variablesplit6<-function(){
   dd
 }
 
-#' Shiny App to visualize Data
+#' runCompare
+#' @param listofpackage1 a vector of character strings
+#' @param listofpackage2 a vector of character strings
+#' @param package1 a character string
+#' @param package2 a character string
+#' @description Shiny App to visualize regression trees and compare synthetic vs non synthetic data
 #' @export
 #' @examples
 #' package1<-NULL
 #' package2<-NULL
 #' runCompare()
-
-runCompare<-function(listofpackage1=installed.packages()[,"Package"],
-                     listofpackage2=installed.packages()[,"Package"],
-                     package1=if(is.element("BigSyn",listofpackage1)){"BigSyn"}else{listofpackage1[1]},
-                     package2=if(is.element("BigSyn",listofpackage2)){"BigSyn"}else{listofpackage2[1]}){
+runCompare<-function(
+  listofpackage1=installed.packages()[,"Package"],
+  listofpackage2=installed.packages()[,"Package"],
+  package1=if(is.element("BigSyn",listofpackage1)){"BigSyn"}else{listofpackage1[1]},
+  package2=if(is.element("BigSyn",listofpackage2)){"BigSyn"}else{listofpackage2[1]}){
   library(shiny)
   library(dplyr)
   library(gridExtra)

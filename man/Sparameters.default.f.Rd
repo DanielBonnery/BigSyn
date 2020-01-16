@@ -4,17 +4,46 @@
 \alias{Sparameters.default.f}
 \title{Default synthetisation parameters based on variable names}
 \usage{
-Sparameters.default.f(ref.table, asis = NULL, notpredictor = NULL,
+Sparameters.default.f(
+  ref.table,
+  asis = NULL,
+  notpredictor = NULL,
   variables = Sparameters.variables.reorder.default(names(ref.table)),
-  predictors.matrix = predictor.matrix.default(variables)[!is.element(variables,
-  asis), !is.element(variables, notpredictor)], moresplits = NULL,
-  preferredmethod = "rf")
+  predictors.matrix = predictor.matrix.default(variables)[!is.element(variables, asis),
+    !is.element(variables, notpredictor)],
+  splittingvar = NULL,
+  moresplits = NULL,
+  preferredmethod = "ctree",
+  splithreshold = 100,
+  defaultsynparameters = list(smoothing = "none", importance = TRUE, keep.forest = TRUE,
+    minbucket = 30)
+)
 }
 \arguments{
-\item{a}{vector of character strings}
+\item{ref.table}{a dataframe}
+
+\item{asis}{a vector of character strings, indicating which variables to keep as is.}
+
+\item{notpredictor}{a vector of character strings, indicating which variables are not supposed to be used as predictors.}
+
+\item{variables}{a vector of character strings, indicating the variables to synthesize. Order is important.}
+
+\item{predictors.matrix}{a predictor matrix. Number of rows is the number of variables to synthesize, number of columns is all the variables from ref.table}
+
+\item{moresplits}{an object of class moresplist (not defined yet)}
+
+\item{preferredmethod:}{"rf" or "ctree"}
+
+\item{defaultparameters}{a list indicating default parameters for synthpop synthesisation functions, for example ntree=5, smoothing="none"}
+}
+\value{
+
 }
 \description{
 Default synthetisation parameters based on variable names
+}
+\details{
+creates default synthetisation parameters
 }
 \examples{
 data(TtableA)

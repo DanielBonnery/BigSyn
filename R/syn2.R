@@ -98,13 +98,16 @@ Sparameters.variables.reorder.default<-
 #' unique(get_cellrn(names(XKB)))
 get_cellrn<-function(x){sapply(x,function(y){if(length(y)>0){if(grepl("_",y)){
   substr(y,stringi::stri_locate_first_fixed(y,"_")[,2]+1,nchar(y))}else{""}}else{""}},simplify=TRUE)}
-#' Drop last marginpos (cuts everything after last after "_")
+
+#' Drop last margin position (Trims all strings of a vector of strings after the last "_")
 #' 
-#' @details if x is "aa.x_a_1_f_1" returns "a_1_f_1"
+#' @details if x is "AA.char1_La_Ld_Lrn1" returns "AA.char1_La_Ld", if x contains no "_", returns empty string
 #' @param x a vector of character strings 
 #' @return a vector of character strings
 #' @examples 
 #' drop_last("AA.char1_La_Ld_Lrn1")
+#' drop_last("iojoij")
+#' drop_last("aa.iojoij")
 drop_last<-function(x){sapply(x,function(y){if(length(y)>0){if(grepl("_",y)){
   substr(y,1,stringi::stri_locate_last_fixed(y,"_")[,2]-1)}else{""}}else{""}},simplify=TRUE)}
 
@@ -122,8 +125,8 @@ get_cell<-function(x,iscellrn=FALSE,iscell=FALSE){if(iscell){x}else{if(iscellrn)
 
 #' get parent if any
 #' @details if x is "aa.xoijj_a_1_f_1_" returns "a_1_f"
-#' @variables    x a character strings 
-#' @variable_ref x a vector of character strings 
+#' @param variables     a character strings 
+#' @param variable_ref  a vector of character strings 
 #' @return a vector of character strings
 #' @examples
 #' get_parent("aa.x_1_2_3_4","aa.x_1_2_3")#default
@@ -148,9 +151,8 @@ get_var<-function(x){sapply(x,function(y){
   substr(y,1,if(grepl("_",y)){stringi::stri_locate_first_fixed(y,"_")[,2]-1}else{nchar(y)})},simplify=TRUE)}
 
 #' Get the number of margins for a cell
-#' @details 
-#' if x is "aa.xoijj_a_1_f_1", cell=FALSE returns 4"
-#' if x is "a_1_f_1", cell=TRUE returns 4"
+#' 
+#' @details  if x is "aa.xoijj_a_1_f_1", cell=FALSE returns 4"; if x is "a_1_f_1", cell=TRUE returns 4"
 #' @param x a vector of character strings 
 #' @param iscell a boolean indicating if x is a variable name or a cell name. 
 #' @return a vector of  integers.
@@ -186,10 +188,7 @@ get_cellXXsplit<-function(x,marginpos=NULL,iscellXX=FALSE){
   sapply(x,function(y){strsplit(y,"_")[[1]][if(!iscellXX){-1}else{TRUE}][if(is.null(marginpos)){(1:get_cellXXmarginscount(y,iscellXX))}else{marginpos}]})}
 
 #' Get cell group
-#' @details 
-#' if x is "a_1_f_2_aa.xoijj",marginpos=2 returns "1"
-#' if x is "a_1_f_2_aa.xoijj",marginpos=-2 returns "a_f_2"
-#' if x is "a_1_f_2_aa.xoijj",marginpos=c(1:2) returns "a_1"
+#' @details #' if x is "a_1_f_2_aa.xoijj",marginpos=2 returns "1"; if x is "a_1_f_2_aa.xoijj",marginpos=-2 returns "a_f_2"; if x is "a_1_f_2_aa.xoijj",marginpos=c(1:2) returns "a_1"
 #' @param x a vector of character strings 
 #' @param marginpos a vector of integer 
 #' @return a vector of character strings
@@ -212,8 +211,7 @@ get_cellXXgroup<-function(x,marginpos,iscellXX=TRUE){sapply(x,function(y){
 
 #' get cell predecessors at margin
 #' 
-#' @details 
-#' if XXs is "aa.xoijj_a_1_f_1" and refXXs contains "aa.xoijj_a_1_e_1"  and marginpos=3 returns "aa.xoijj_a_1_e_1"
+#' @details if XXs is "aa.xoijj_a_1_f_1" and refXXs contains "aa.xoijj_a_1_e_1"  and marginpos=3 returns "aa.xoijj_a_1_e_1"
 #' if XXs is "aa.xoijj_a_1_f_2" and refXXs contains "aa.xoijj_a_1_f_1"  and marginpos=NULL returns "aa.xoijj_a_1_f_1"
 #' if XXs is "id1" and  iscellXX=FALSE whatever refXXs returns character(0)
 #' if XXs is "" and iscellXX=FALSE whatever refXXs returns character(0)
@@ -411,7 +409,7 @@ predictor.matrix.rate<-function(variables,
   predictors.matrix}
 
 #' Default synthetisation parameters based on variable names
-#' @details 
+#' @details creates default synthetisation parameters
 #' @param ref.table a dataframe
 #' @param asis a vector of character strings, indicating which variables to keep as is.
 #' @param notpredictor a vector of character strings, indicating which variables are not supposed to be used as predictors.

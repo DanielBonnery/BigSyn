@@ -4,8 +4,12 @@
 \alias{predictor.matrix.rate}
 \title{predictor.matrix.rate}
 \usage{
-predictor.matrix.rate(variables, nopredictor = character(0),
-  allpredictor = character(0), marginposs = integer(0))
+predictor.matrix.rate(
+  variables,
+  nopredictor = character(0),
+  allpredictor = character(0),
+  marginposs = integer(0)
+)
 }
 \arguments{
 \item{x}{a vector of character strings}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/syn2.R
 \name{drop_last}
 \alias{drop_last}
-\title{Drop last marginpos (cuts everything after last after "_")}
+\title{Drop last margin position (Trims all strings of a vector of strings after the last "_")}
 \usage{
 drop_last(x)
 }
@@ -13,11 +13,13 @@ drop_last(x)
 a vector of character strings
 }
 \description{
-Drop last marginpos (cuts everything after last after "_")
+Drop last margin position (Trims all strings of a vector of strings after the last "_")
 }
 \details{
-if x is "aa.x_a_1_f_1" returns "a_1_f_1"
+if x is "AA.char1_La_Ld_Lrn1" returns "AA.char1_La_Ld", if x contains no "_", returns empty string
 }
 \examples{
 drop_last("AA.char1_La_Ld_Lrn1")
+drop_last("iojoij")
+drop_last("aa.iojoij")
 }

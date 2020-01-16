@@ -132,8 +132,9 @@ fitmodel.ctree<-function(x,y,treeplotsavepath=NULL,...){
 #' @param x a dataframe of predictors
 #' @param Rules a data frame containing 2 character variables: "terminalnode" and "condition"
 #' @return a vector of lenth the number of rows of x indicating the terminal nodes. 
-#' @example
+#' @example 
 #' getnodesfromrules(x=iris[1:3,-5],Rules=fitmodel.ctree(x=iris[,-5],y=iris$Species)$Rules)
+
 getnodesfromrules<-function(x,Rules){
   terminalnode=rep(NA,nrow(x))
   for(j in 1:nrow(Rules)){
@@ -148,7 +149,7 @@ getnodesfromrules<-function(x,Rules){
 #' @param terminalnodes a vector of terminal nodes
 #' @param newterminalnodes: a path to save the graph
 #' @return  a vector of the same size than terminalnodes, obtained by sampling betweenn the values of y such for the same terminal node.  
-#' @example
+#' @examples
 #' y=iris$Species;x=iris[,-5];fit.mod<-fitmodel.ctree(x,y);terminalnodes<-getnodesfromrules(x,fit.mod$Rules);
 #' newterminalnodes<-sample(unique(terminalnodes),10,replace=TRUE);
 #' samplefrompool(y,terminalnodes,newterminalnodes)
@@ -183,7 +184,8 @@ samplefrompool<-function(y,terminalnodes,newterminalnodes){
 #' @param newterminalnodes: a path to save the graph
 #' @return  a vector of the same size than terminalnodes, obtained by sampling betweenn the values of y such for the same terminal node.  
 #' @example
-#' y=iris$Species;x<-xp<-iris[,-5];fit.model<-fitmodel.ctree(x,y);sample.ctree(x,fit.model)
+#' y<-iris$Species;x<-xp<-iris[,-5];fit.model<-fitmodel.ctree(x,y);sample.ctree(x,fit.model)
+
 sample.ctree<-function(xp,fit.model,smoothing="none",...){
   keep<-names(xp)[sapply(names(xp),function(x){
     any(grepl(pattern = x,x =fit.model$Rules$condition))})]
@@ -218,12 +220,18 @@ fitmodel.rf<-function(x,y,treeplotsavepath=NULL,...){
 #' @param TtableANAto0 a table  containing the predictors without NAs as well as the outcome
 #' @return a list.  
 #' @examples
-#' 
+#' #Load the data
 #' data(TtableA,package="BigSyn")
+#' #define parameters
 #' Sparameters<-Sparameters.default.f(ref.table=TtableA)
-#' Sparameters_i<-Sparameters[[53]]; fitmodelsavepath=NULL; TtableANAto0<-NAto0(TtableA);redocomputationsevenifexists=FALSE
+#' Sparameters_i<-Sparameters[[53]]; 
+#' fitmodelsavepath<-NULL; 
+#' TtableANAto0<-NAto0(TtableA);
+#' redocomputationsevenifexists<-FALSE
 #' treeplotsavefolder=tempdir()
-#' fitthemodel(Sparameters_i,fitmodelsavepath = NULL,TtableANAto0 = TtableANAto0,treeplotsavefolder=tempdir())
+#' #fit the model:
+#' fitthemodel(Sparameters_i,fitmodelsavepath = NULL,TtableANAto0 = TtableANAto0,
+#'             treeplotsavefolder=tempdir())
 #' Sparameters_i<-Sparameters[["AA.present_La_La_Lrn1"]]; 
 #' treeplotsavefolder=tempdir()
 #' fitthemodel(Sparameters_i,NULL,TtableANAto0,treeplotsavefolder=tempdir())
@@ -286,7 +294,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 
 #' General SDP function.
 #' 
-#'@example
+#'@examples
 #'
 #'data(TtableA,package="BigSyn")
 #'TtableA$AA.cont1_La_La<-rowSums(TtableA[grep("AA.cont1_La_La",names(TtableA))])

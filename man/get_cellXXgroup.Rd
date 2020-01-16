@@ -18,9 +18,7 @@ a vector of character strings
 Get cell group
 }
 \details{
-if x is "a_1_f_2_aa.xoijj",marginpos=2 returns "1"
-if x is "a_1_f_2_aa.xoijj",marginpos=-2 returns "a_f_2"
-if x is "a_1_f_2_aa.xoijj",marginpos=c(1:2) returns "a_1"
+#' if x is "a_1_f_2_aa.xoijj",marginpos=2 returns "1"; if x is "a_1_f_2_aa.xoijj",marginpos=-2 returns "a_f_2"; if x is "a_1_f_2_aa.xoijj",marginpos=c(1:2) returns "a_1"
 }
 \examples{
 get_cellXXgroup(c("aa.x_1_2_3_4","bb.x_1_2_3_4"),2,iscellXX=FALSE)

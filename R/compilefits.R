@@ -1,12 +1,27 @@
-#treedepth<-function(x){if(x$terminal){1}else{1+max(treedepth(x$right),treedepth(x$left))}}
+#' Compute depth of a "party" tree
+#' @param x a tree
+#' @description this function takes the output of the partykit::ctree function and prints the tree into a pdf file, located in the specified folder. It computes the depth and width and tries to create a pdf with the right dimensions.
+#' @details recursive function
+#' @examples
+#' y=iris$Species;x=iris[,-5]
+#' partyctree <- party::ctree(y ~ ., data=cbind(y=y,x))
+#' treedepth(partyctree@tree)
+#' partyctree <- party::ctree(y ~ ., data=cbind(y=y,x))
+#' treedepth(partykit::ctree(y ~ ., data=cbind(y=y,x)))
+treedepth<-function(x){
+  if(is.element("SplittingNode",class(x))|is.element("TerminalNode",class(x))){
+  if(x$terminal){1}else{1+max(treedepth(x$right),treedepth(x$left))}
+    }else{
+    1+depth(x)}}
 
 #' Ctree to pdf graph
 #' @param partykitctree: an output of partykit::ctree
 #' @param savepath: a file path where to store the pdf of the plot
-#' @example
+#' @description this function takes the output of the partykit::ctree function and prints the tree into a pdf file, located in the specified folder. It computes the depth and width and tries to create a pdf with the right dimensions.
+#' @examples
 #' y=iris$Species;x=iris[,-5]
 #' partykitctree <- partykit::ctree(y ~ ., data=cbind(y=y,x))
-
+#' treetopdf(partykitctree,"./x.pdf")
 treetopdf<-function(partykitctree,savepath){
   depthoftree<-9.6;
   widthoftree<-9.6;
@@ -17,10 +32,20 @@ treetopdf<-function(partykitctree,savepath){
   dev.off()
 }
 
-
-
-
-compilefits<-function(Sparameters,fitmodelsavepath,pdfpath=fitmodelsavepath,.progress="text"){
+#' compilefits
+#' @param Sparameters: a list, that has the same structure than the outputs of
+#' @param fitmodelsavepath: a file path where to store the pdf of the plot
+#' @param pdfpath where to save the pdfs
+#' @param .progress: a string, name of the progress bar to use, see plyr::create_progress_bar
+#' @description For each element of save parameters, look at the tree and produces the corresponding pdf.  It also removes all the information that is stored in the ouptut of parykit::Ctree, e.g. the data. It only keeps the tree and the rules to get it.
+#' @details depends on plyr
+#' @examples
+#' y=iris$Species;x=iris[,-5]
+#' partykitctree <- partykit::ctree(y ~ ., data=cbind(y=y,x))
+compilefits<-function(Sparameters,
+                      fitmodelsavepath,
+                      pdfpath=fitmodelsavepath,
+                      .progress="text"){
   #library(magick)
   #library(rsvg)
   plyr::llply(Sparameters,function(Sparameter){
@@ -46,9 +71,15 @@ compilefits<-function(Sparameters,fitmodelsavepath,pdfpath=fitmodelsavepath,.pro
   },.progress=.progress)
 }
 
-
-
-
+#' compilesamplereports
+#' @param Sparameters: a list, that has the same structure than the outputs of
+#' @param samplereportssavepath: a file path where to store the sample reports
+#' @description Sample reports are the output of the function ReportonSample
+#' @details depends on plyr
+#' @seealso ReportonSample
+#' @examples
+#' y=iris$Species;x=iris[,-5]
+#' partykitctree <- partykit::ctree(y ~ ., data=cbind(y=y,x))
 compilesamplereports<-function(Sparameters,samplereportssavepath){
   library(magick)
   library(rsvg)
@@ -56,7 +87,8 @@ compilesamplereports<-function(Sparameters,samplereportssavepath){
     wheresamplereportissaved<-file.path(samplereportssavepath,paste0(Sparameter$variable,".rda"))
     print(paste0("Now creating sample report for ",Sparameter$variable),quote=FALSE)
     load(wheresamplereportissaved)
-    if(length(Sparameter$splits)>length(Sparameter$splits)){Sparameter$splits<-c(Sparameter$splits,fakesel=list())}
+    if(length(Sparameter$splits)>length(Sparameter$splits)){
+      Sparameter$splits<-c(Sparameter$splits,fakesel=list())}
     Sparameter$splits<-lapply(1:length(Sparameter$splits),function(i){
       c(Sparameter$splits[[i]],ReportonSample$splits[[i]])
     })

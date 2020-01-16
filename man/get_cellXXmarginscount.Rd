@@ -18,8 +18,7 @@ a vector of  integers.
 Get the number of margins for a cell
 }
 \details{
-if x is "aa.xoijj_a_1_f_1", cell=FALSE returns 4"
-if x is "a_1_f_1", cell=TRUE returns 4"
+if x is "aa.xoijj_a_1_f_1", cell=FALSE returns 4"; if x is "a_1_f_1", cell=TRUE returns 4"
 }
 \examples{
 get_cellXXmarginscount("1_2_3_4",iscellXX=TRUE)

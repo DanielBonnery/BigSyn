@@ -4,8 +4,12 @@
 \alias{Sparameters.variables.reorder.default}
 \title{General Default ordering of variables for synthetisation based on name of the variable.}
 \usage{
-Sparameters.variables.reorder.default(variables, orderwithinorigin = NULL,
-  id = NULL)
+Sparameters.variables.reorder.default(
+  variables,
+  orderwithinorigin = NULL,
+  id = NULL,
+  extrasort = NULL
+)
 }
 \arguments{
 \item{variables}{vector of character strings, indicating names of variables}
@@ -19,10 +23,11 @@ a list.
 General Default ordering of variables for synthetisation based on name of the variable.
 }
 \examples{
-TK<-Tsampledata(TRUE)
+TK<-Tsampledata(TRUE)$TtableA
 Sparameters.variables.reorder.default(names(TK$TtableA))
 #Second example: no transposing variables
-TK<-Tsampledata(FALSE)
+TtableA<-Tsampledata(TRUE)$TtableA
 orderwithinorigin=c("AA.factor1","AA.factor2")
-Sparameters.variables.reorder.default(names(TK$TtableA),orderwithinorigin)
+variables<-names(TtableA)
+Sparameters.variables.reorder.default(variables,orderwithinorigin)
 }

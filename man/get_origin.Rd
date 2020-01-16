@@ -19,6 +19,7 @@ Get origin table
 if x is "aa.xoijj_a_1_f_1_" returns c("aa")
 }
 \examples{
+get_origin("tableA.cont1_1_Lrn1")
 variables<-Tsampledata(TRUE)$variables
 unlist(unique(get_origin(variables,variables)))
 variables<-Tsampledata(FALSE)$variables

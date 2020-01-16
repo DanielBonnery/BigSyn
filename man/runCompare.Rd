@@ -2,12 +2,28 @@
 % Please edit documentation in R/runCompare.R
 \name{runCompare}
 \alias{runCompare}
-\title{Shiny App to visualize Data}
+\title{runCompare}
 \usage{
-runCompare(package1 = NULL, package2 = NULL)
+runCompare(
+  listofpackage1 = installed.packages()[, "Package"],
+  listofpackage2 = installed.packages()[, "Package"],
+  package1 = if (is.element("BigSyn", listofpackage1)) {     "BigSyn" } else {    
+    listofpackage1[1] },
+  package2 = if (is.element("BigSyn", listofpackage2)) {     "BigSyn" } else {    
+    listofpackage2[1] }
+)
+}
+\arguments{
+\item{listofpackage1}{a vector of character strings}
+
+\item{listofpackage2}{a vector of character strings}
+
+\item{package1}{a character string}
+
+\item{package2}{a character string}
 }
 \description{
-Shiny App to visualize Data
+Shiny App to visualize regression trees and compare synthetic vs non synthetic data
 }
 \examples{
 package1<-NULL
