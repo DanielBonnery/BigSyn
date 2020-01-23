@@ -293,6 +293,23 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 }
 
 #' General SDP function.
+#' @param TtableA a dataframe  to synthesize
+#' @param asis list of variable names from TtableA to keep as is (e.g. not to synthesize)
+#' @param notpredictor list of variable names which should not be used as predictors
+#' @param nrep number of synthetic replicates wanted
+#' @param synparameters general synthetisation paramters
+#' @param Sparameters a list, Specific (variable by variable) synthetisation parameters, splits ...
+#' @param STtableA a dataframe
+#' @param fitmodelsavepath a path where to save the fitted models
+#' @param treeplotsavefolder  a path where to save the tree plots
+#' @param samplereportsavepath  a path where to save the sampling report
+#' @param stepbystepsavepath a path where to backup the synthetised in case of a crash
+#' @param doparallel a boolean indicating whether sampling should be done in parallel for each repliacte
+#' @param recode : a vector of character strings or NULL, list of variables to be recoded
+#' @param saveeach an integer, indicating every how many variables a backup is done 
+#' @param randomfitorder a boolean : fitting for each variable can be done in the order of appearance of each variables or at random
+#' @param fitonly a boolean, if TRUE, no sampling is done.
+#' @details This function is doing both the fitting and the sampling.
 #' 
 #'@examples
 #'

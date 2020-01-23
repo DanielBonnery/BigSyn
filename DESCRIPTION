@@ -2,7 +2,7 @@ Package: BigSyn
 Type: Package
 Title: X
 Version: 1.0 
-Date: 2020-01-16
+Date: 2020-01-23
 Author: D. Bonnery
 Maintainer: D. Bonnery  <dbonnery@umd.edu>
 Description: Data
@@ -23,4 +23,3 @@ Depends: devtools,
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: true
-RoxygenNote: 7.0.2

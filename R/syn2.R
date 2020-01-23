@@ -40,7 +40,29 @@ sorttablewithingroup<-function(.data,groupvar,sortvar,decreasing=FALSE){
 #' 
 #' @param variables vector of character strings, indicating names of variables
 #' @param orderwithinorigin a list, see example
+#' @param id a vector of character strings
+#' @extrasort
 #' @return a list.  
+#' @details After transposition, variable names follow this format: 
+#' origin.variablename_margin1_margin2....lastmargin
+#' Some rules have to be followed:
+#'
+#'  - Missing indicators have to be synthesised before the corresponding variables,
+#' for example AA.factor1missingind_L1_L2_L1 needs to be synthesised before AA.factor1missingind_L1_L2_L1 
+#' 
+#' - Cell indicators must be synthesised before the corresponding variables.
+#' For example  AA.present_L1_L2_L1 must be synthesised before AA.factor1_L1_L2_L1 and before AA.cont1_L1_L2_L1 
+#' 
+#' - Parent variables (aggregated) must be synthesised before their children:
+#' For example AA.present_L1 must be synthesised before AA.present_L1_L2,
+#' AA.cont2_L1_L2 must be synthesised before AA.cont2_L1_L2_L3
+#' AA.present_L1 must be synthesised before AA.present_L1_L3
+#' AA.cont2missingind_L1 must be synthesised before AA.cont2missingind_L1_L3
+#' 
+#' - if for examples variable AA.cont1 in each cell has to be synthesised before AA.cont2,
+#' this can be specified with the orderwithinorigin argument
+#' 
+#' - for the use of the argument extrasort, refer to sorttablewithingroup
 #' @examples
 #' TK<-Tsampledata(TRUE)$TtableA
 #' Sparameters.variables.reorder.default(names(TK$TtableA))
@@ -410,13 +432,16 @@ predictor.matrix.rate<-function(variables,
 
 #' Default synthetisation parameters based on variable names
 #' @details creates default synthetisation parameters
+#' Some rules: parents variable are potential predictors of their children,
+#' synthetisation is conditional to missingindicators,
+#' synthetisation is conditional to presence in cell 
 #' @param ref.table a dataframe
 #' @param asis a vector of character strings, indicating which variables to keep as is.
 #' @param notpredictor a vector of character strings, indicating which variables are not supposed to be used as predictors.
 #' @param variables a vector of character strings, indicating the variables to synthesize. Order is important.
 #' @param predictors.matrix a predictor matrix. Number of rows is the number of variables to synthesize, number of columns is all the variables from ref.table
 #' @param moresplits an object of class moresplist (not defined yet) 
-#' @param preferredmethod: "rf" or "ctree"
+#' @param preferredmethod: "rf" for random forest or "ctree" for classification tree
 #' @param defaultparameters  a list indicating default parameters for synthpop synthesisation functions, for example ntree=5, smoothing="none"
 #' @return 
 #' @examples
@@ -570,10 +595,12 @@ Sparameters.default.f<-
   }
 
 
-#' General Default ordering of variables for synthetisation based on name of the variable.
+#' Recoding of NAs to 0 or "NA"
 #' 
 #' @param tableA a dataframe
 #' @return a dataframe  
+#' @details for synthetisation to run, missing values are treated as a special factor level for factor variables,
+#' or as 0 for continuous variables. To avoid issues, for continuous variables, a missing indicator is also created.
 #' @examples
 #' toto<-cars
 #' toto$speed[sample(nrow(cars),3)]<-NA
