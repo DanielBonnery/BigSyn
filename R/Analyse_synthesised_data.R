@@ -1,4 +1,4 @@
 donors.receptors.check<-
-  funtion(Rules,
+  function(Rules,
           gold.data,
           syn.data){}
