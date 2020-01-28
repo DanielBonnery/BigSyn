@@ -2,13 +2,12 @@ Package: BigSyn
 Type: Package
 Title: X
 Version: 1.0 
-Date: 2020-01-23
+Date: 2020-01-28
 Author: D. Bonnery
 Maintainer: D. Bonnery  <dbonnery@umd.edu>
 Description: Data
 Remotes: tidyverse/magrittr
 Depends: devtools,
-	RODBC,
 	ggplot2,
 	sqldf,
 	lattice,
