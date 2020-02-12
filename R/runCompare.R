@@ -258,7 +258,7 @@ runCompare<-function(
                   selectize=FALSE)})
     
     output$missingplot1_1 <- renderPlot({
-      ggplot_missing(toto1()$table1_1,reordonne=TRUE)+th
+      StudyDataTools::ggplot_missing(toto1()$table1_1,reordonne=TRUE)+th
     })   
     
     output$advmissingplot1_1 <- eventReactive(input$doadvmissing1,{
@@ -388,11 +388,11 @@ runCompare<-function(
     
     
     output$missingplot3_1 <- renderPlot({
-      ggplot_missing(toto3()$table3_1,reordonne=TRUE)+th
+      StudyDataTools::ggplot_missing(toto3()$table3_1,reordonne=TRUE)+th
     })   
     
     output$missingplot3_2 <- renderPlot({
-      ggplot_missing(toto3()$table3_2,reordonne=TRUE)+th
+      StudyDataTools::ggplot_missing(toto3()$table3_2,reordonne=TRUE)+th
     })
     
     advmissingplot3_1 <- eventReactive(input$doadvmissing3_1, {
