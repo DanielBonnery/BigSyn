@@ -1,3 +1,3 @@
 #
 library(BigSyn)
-runCompare(c("BigSyn","base"),c("BigSyn","ggplot2","plyr"))
+runCompare(c("BigSyn","datasets"),c("BigSyn","ggplot2","plyr"))
