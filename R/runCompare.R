@@ -265,7 +265,7 @@ runCompare<-function(
       ggplot_missing2(toto1()$table1_1,reordonne=TRUE,keep=input$variable1_1)+th
     })   
     
-    output$missing.summary1 <- shiny::renderDataTable(missing.summary(toto1()$table1_1))
+    output$missing.summary1 <- shiny::renderDataTable(StudyDataTools::missing.summary(toto1()$table1_1))
     
     output$table1_1<- shiny::renderDataTable(toto1()$table1_1)
     
