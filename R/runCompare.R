@@ -265,9 +265,9 @@ runCompare<-function(
       StudyDataTools::ggplot_missing2(toto1()$table1_1,reordonne=TRUE,keep=input$variable1_1)+th
     })   
     
-    output$missing.summary1 <- shiny::renderDataTable(StudyDataTools::missing.summary(toto1()$table1_1))
+    output$missing.summary1 <- DT::renderDataTable(StudyDataTools::missing.summary(toto1()$table1_1))
     
-    output$table1_1<- shiny::renderDataTable(toto1()$table1_1)
+    output$table1_1<- DT::renderDataTable(toto1()$table1_1)
     
     
     ######################################################
@@ -312,7 +312,7 @@ runCompare<-function(
     })   
     output$qplot2_1 <- renderPlot({
       ggplot2::ggplot(data.frame(X=toto2()$variable2_1,Origin=factor("Original")),aes(X,Origin,colour=Origin))+geom_count()+colScale+theme(legend.position="none")+ylab("")})   
-    output$contingencytable2_1 <- renderDataTable(
+    output$contingencytable2_1 <- DT::renderDataTable(
       as.data.frame(table(toto2()$variable2_1,useNA="ifany")))
     output$table2_1<- shiny::renderTable(toto2()$table2_1)
     
@@ -497,7 +497,7 @@ runCompare<-function(
     
     
     
-    output$contingencytable4_1 <- renderDataTable(
+    output$contingencytable4_1 <- DT::renderDataTable(
       reshape2::dcast(reshape2::melt(as.data.frame(
         ftable(X~Origin,data=toto4()$table4,na.action=na.pass, exclude = NULL)/nrow(toto4()$table4)),
         value.name="X2",variable.name="Origin2"),X~Origin,value.var = "X2")
@@ -680,12 +680,12 @@ runCompare<-function(
         coord_flip() + 
         theme(legend.position = "none")+colScale+colScale2
     })
-    output$contingencytable5_1 <- renderDataTable(
+    output$contingencytable5_1 <- DT::renderDataTable(
       reshape2::dcast(reshape2::melt(as.data.frame(
         ftable(X+Y~Origin,data=toto5()$table5,na.action=na.pass, exclude = NULL)/nrow(toto5()$table5)),
         value.name="X2",variable.name="Origin2"),X+Y~Origin,value.var = "X2")
     )
-    output$table5_1<- shiny::renderDataTable(toto5()$table5)
+    output$table5_1<- DT::renderDataTable(toto5()$table5)
     
     
     ####6
@@ -751,7 +751,7 @@ runCompare<-function(
     
     output$report6.condition<-renderPrint({report6()$condition})    
     output$report6.numpred   <-renderPrint({length(report6()$predictors)})    
-    output$report6.predictors   <-shiny::renderDataTable(report6()$predictors)    
+    output$report6.predictors   <-DT::renderDataTable(report6()$predictors)    
     output$report6.method   <-renderPrint({report6()$method})            
     output$report6.problem   <-renderPrint({report6()$problem})        
     output$report6.method2   <-renderPrint({report6()$method2})    
