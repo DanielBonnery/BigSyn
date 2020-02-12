@@ -262,7 +262,7 @@ runCompare<-function(
     })   
     
     output$advmissingplot1_1 <- eventReactive(input$doadvmissing1,{
-      ggplot_missing2(toto1()$table1_1,reordonne=TRUE,keep=input$variable1_1)+th
+      StudyDataTools::ggplot_missing2(toto1()$table1_1,reordonne=TRUE,keep=input$variable1_1)+th
     })   
     
     output$missing.summary1 <- shiny::renderDataTable(StudyDataTools::missing.summary(toto1()$table1_1))
@@ -396,8 +396,8 @@ runCompare<-function(
     })
     
     advmissingplot3_1 <- eventReactive(input$doadvmissing3_1, {
-      graph1<- ggplot_missing2(toto3()$table3_1,reordonne=TRUE,keep=toto3()$variable3_1)+th
-      graph2<- ggplot_missing2(toto3()$table3_2,reordonne=TRUE,keep=toto3()$variable3_1)+th
+      graph1<- StudyDataTools::ggplot_missing2(toto3()$table3_1,reordonne=TRUE,keep=toto3()$variable3_1)+th
+      graph2<- StudyDataTools::ggplot_missing2(toto3()$table3_2,reordonne=TRUE,keep=toto3()$variable3_1)+th
       grid.arrange(graph1,graph2,nrow=1)})
     
     
