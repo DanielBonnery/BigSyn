@@ -1,25 +1,13 @@
-Package: BigSyn
+Package: datagovuk
 Type: Package
 Title: X
 Version: 1.0
-Date: 2020-02-12
+Date: 2020-02-13
 Author: D. Bonnery
 Maintainer: D. Bonnery  <dbonnery@umd.edu>
 Description: Data
-Remotes: tidyverse/magrittr,
-	DanielBonnery/StudyDataTools
-Depends: devtools,
-	ggplot2,
-	sqldf,
-	lattice,
-	printr,
-	knitr,
-	reshape2,
-	data.table,
-	rlist,
-	haven,
-	sas7bdat,
-	partykit
+Remotes: hrbrmstr/cfhttr
+Depends: downloader
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: true
