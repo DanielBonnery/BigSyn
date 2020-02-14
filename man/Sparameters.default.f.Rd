@@ -32,7 +32,7 @@ Sparameters.default.f(
 
 \item{moresplits}{an object of class moresplist (not defined yet)}
 
-\item{preferredmethod:}{"rf" or "ctree"}
+\item{preferredmethod:}{"rf" for random forest or "ctree" for classification tree}
 
 \item{defaultparameters}{a list indicating default parameters for synthpop synthesisation functions, for example ntree=5, smoothing="none"}
 }
@@ -44,6 +44,9 @@ Default synthetisation parameters based on variable names
 }
 \details{
 creates default synthetisation parameters
+Some rules: parents variable are potential predictors of their children,
+synthetisation is conditional to missingindicators,
+synthetisation is conditional to presence in cell
 }
 \examples{
 data(TtableA)

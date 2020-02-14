@@ -2,7 +2,7 @@
 % Please edit documentation in R/syn2.R
 \name{NAto0}
 \alias{NAto0}
-\title{General Default ordering of variables for synthetisation based on name of the variable.}
+\title{Recoding of NAs to 0 or "NA"}
 \usage{
 NAto0(tableA)
 }
@@ -13,7 +13,11 @@ NAto0(tableA)
 a dataframe
 }
 \description{
-General Default ordering of variables for synthetisation based on name of the variable.
+Recoding of NAs to 0 or "NA"
+}
+\details{
+for synthetisation to run, missing values are treated as a special factor level for factor variables,
+or as 0 for continuous variables. To avoid issues, for continuous variables, a missing indicator is also created.
 }
 \examples{
 toto<-cars

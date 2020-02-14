@@ -15,12 +15,36 @@ Sparameters.variables.reorder.default(
 \item{variables}{vector of character strings, indicating names of variables}
 
 \item{orderwithinorigin}{a list, see example}
+
+\item{id}{a vector of character strings}
 }
 \value{
 a list.
 }
 \description{
 General Default ordering of variables for synthetisation based on name of the variable.
+}
+\details{
+After transposition, variable names follow this format: 
+origin.variablename_margin1_margin2....lastmargin
+Some rules have to be followed:
+
+ - Missing indicators have to be synthesised before the corresponding variables,
+for example AA.factor1missingind_L1_L2_L1 needs to be synthesised before AA.factor1missingind_L1_L2_L1 
+
+- Cell indicators must be synthesised before the corresponding variables.
+For example  AA.present_L1_L2_L1 must be synthesised before AA.factor1_L1_L2_L1 and before AA.cont1_L1_L2_L1 
+
+- Parent variables (aggregated) must be synthesised before their children:
+For example AA.present_L1 must be synthesised before AA.present_L1_L2,
+AA.cont2_L1_L2 must be synthesised before AA.cont2_L1_L2_L3
+AA.present_L1 must be synthesised before AA.present_L1_L3
+AA.cont2missingind_L1 must be synthesised before AA.cont2missingind_L1_L3
+
+- if for examples variable AA.cont1 in each cell has to be synthesised before AA.cont2,
+this can be specified with the orderwithinorigin argument
+
+- for the use of the argument extrasort, refer to sorttablewithingroup
 }
 \examples{
 TK<-Tsampledata(TRUE)$TtableA

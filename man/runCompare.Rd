@@ -5,6 +5,8 @@
 \title{runCompare}
 \usage{
 runCompare(
+  data1 = NULL,
+  data2 = NULL,
   listofpackage1 = installed.packages()[, "Package"],
   listofpackage2 = installed.packages()[, "Package"],
   package1 = if (is.element("BigSyn", listofpackage1)) {     "BigSyn" } else {    
@@ -14,6 +16,10 @@ runCompare(
 )
 }
 \arguments{
+\item{data1}{a dataframe}
+
+\item{data2}{a dataframe}
+
 \item{listofpackage1}{a vector of character strings}
 
 \item{listofpackage2}{a vector of character strings}
@@ -21,6 +27,8 @@ runCompare(
 \item{package1}{a character string}
 
 \item{package2}{a character string}
+
+\item{Sparameters}{}
 }
 \description{
 Shiny App to visualize regression trees and compare synthetic vs non synthetic data

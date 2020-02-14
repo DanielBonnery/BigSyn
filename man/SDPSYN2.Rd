@@ -29,8 +29,44 @@ SDPSYN2(
   fitonly = FALSE
 )
 }
+\arguments{
+\item{TtableA}{a dataframe  to synthesize}
+
+\item{asis}{list of variable names from TtableA to keep as is (e.g. not to synthesize)}
+
+\item{notpredictor}{list of variable names which should not be used as predictors}
+
+\item{nrep}{number of synthetic replicates wanted}
+
+\item{synparameters}{general synthetisation paramters}
+
+\item{Sparameters}{a list, Specific (variable by variable) synthetisation parameters, splits ...}
+
+\item{STtableA}{a dataframe}
+
+\item{fitmodelsavepath}{a path where to save the fitted models}
+
+\item{treeplotsavefolder}{a path where to save the tree plots}
+
+\item{samplereportsavepath}{a path where to save the sampling report}
+
+\item{stepbystepsavepath}{a path where to backup the synthetised in case of a crash}
+
+\item{doparallel}{a boolean indicating whether sampling should be done in parallel for each repliacte}
+
+\item{recode}{: a vector of character strings or NULL, list of variables to be recoded}
+
+\item{saveeach}{an integer, indicating every how many variables a backup is done}
+
+\item{randomfitorder}{a boolean : fitting for each variable can be done in the order of appearance of each variables or at random}
+
+\item{fitonly}{a boolean, if TRUE, no sampling is done.}
+}
 \description{
 General SDP function.
+}
+\details{
+This function is doing both the fitting and the sampling.
 }
 \examples{
 

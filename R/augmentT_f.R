@@ -1,11 +1,13 @@
 #'  Convert cell totals to marginal ratios and create overall total.
 #' 
-#' @details Assume one runs the program 
-#' a table contains the variables 
+#' @details Assume one runs the program
+#'  
 #' augmentT_f(.dataBigSyn::STtableA1,variables=c("AA.cont1","AA.cont1")).
 #' The program looks for all the "cell variables" corresponding to "AA,cont1",
 #' by using the function BigSyn::get_var
+#' 
 #' The results is this:
+#' 
 #' AA.cont1_La_La_Lrn1, AA.cont1_La_Ld_Lrn1, AA.cont1_Lb_Lb_Lrn1, 
 #' AA.cont1_Lc_La_Lrn1, AA.cont1_Lc_Lb_Lrn1, AA.cont1_Lc_Ld_Lrn1,
 #' AA.cont1_La_Lb_Lrn1, AA.cont1_La_Lc_Lrn1, AA.cont1_Lb_La_Lrn1,
@@ -28,63 +30,121 @@
 #' The program creates the following character matrix, named patterns:
 #' 
 #' "1" "La"         ""
+#' 
 #' "1" "Lb"         ""
+#' 
 #' "1" "Lc"         ""
+#' 
 #' "2" "La_La"      "La"          
+#' 
 #' "2" "La_Ld"      "La"          
+#' 
 #' "2" "Lb_Lb"      "Lb"          
+#' 
 #' "2" "Lc_La"      "Lc"          
+#' 
 #' "2" "Lc_Lb"      "Lc"          
+#' 
 #' "2" "Lc_Ld"      "Lc"          
+#' 
 #' "2" "La_Lb"      "La"          
+#' 
 #' "2" "La_Lc"      "La"          
+#' 
 #' "2" "Lb_La"      "Lb"          
+#' 
 #' "2" "Lb_Lc"      "Lb"          
+#' 
 #' "2" "Lb_Ld"      "Lb"          
+#' 
 #' "2" "Lc_Lc"      "Lc"          
+#' 
 #' "3" "La_La_Lrn1" "La_La"       
+#' 
 #' "3" "La_Ld_Lrn1" "La_Ld"       
+#' 
 #' "3" "Lb_Lb_Lrn1" "Lb_Lb"       
+#' 
 #' "3" "Lc_La_Lrn1" "Lc_La"       
+#' 
 #' "3" "Lc_Lb_Lrn1" "Lc_Lb"       
+#' 
 #' "3" "Lc_Ld_Lrn1" "Lc_Ld"       
+#' 
 #' "3" "La_Lb_Lrn1" "La_Lb"       
+#' 
 #' "3" "La_Lc_Lrn1" "La_Lc"       
+#' 
 #' "3" "Lb_La_Lrn1" "Lb_La"       
+#' 
 #' "3" "Lb_Lc_Lrn1" "Lb_Lc"       
+#' 
 #' "3" "Lb_Ld_Lrn1" "Lb_Ld"       
+#' 
 #' "3" "Lc_Lc_Lrn1" "Lc_Lc"       
+#' 
 #' "3" "La_La_Lrn2" "La_La"       
+#' 
 #' "3" "La_Ld_Lrn2" "La_Ld"       
+#' 
 #' "3" "Lb_Lb_Lrn2" "Lb_Lb"       
+#' 
 #' "3" "Lc_La_Lrn2" "Lc_La"       
+#' 
 #' "3" "Lc_Lb_Lrn2" "Lc_Lb"       
+#' 
 #' "3" "Lc_Ld_Lrn2" "Lc_Ld"       
+#' 
 #' "3" "La_Lb_Lrn2" "La_Lb"       
+#' 
 #' "3" "La_Lc_Lrn2" "La_Lc"       
+#' 
 #' "3" "Lb_La_Lrn2" "Lb_La"       
+#' 
 #' "3" "Lb_Lc_Lrn2" "Lb_Lc"       
+#' 
 #' "3" "Lb_Ld_Lrn2" "Lb_Ld"       
+#' 
 #' "3" "Lc_Lc_Lrn2" "Lc_Lc"       
+#' 
 #' "3" "La_La_Lrn3" "La_La"       
+#' 
 #' "3" "La_Ld_Lrn3" "La_Ld"       
+#' 
 #' "3" "Lb_Lb_Lrn3" "Lb_Lb"       
+#' 
 #' "3" "Lc_La_Lrn3" "Lc_La"       
+#' 
 #' "3" "Lc_Lb_Lrn3" "Lc_Lb"       
+#' 
 #' "3" "Lc_Ld_Lrn3" "Lc_Ld"       
+#' 
 #' "3" "La_Lb_Lrn3" "La_Lb"       
+#' 
 #' "3" "La_Lc_Lrn3" "La_Lc"       
+#' 
 #' "3" "Lb_La_Lrn3" "Lb_La"       
+#' 
 #' "3" "Lb_Lc_Lrn3" "Lb_Lc"       
+#' 
 #' "3" "Lb_Ld_Lrn3" "Lb_Ld"       
+#' 
 #' "3" "Lc_Lc_Lrn3" "Lc_Lc"       
+#' 
 #' "3" "La_La_Lrn4" "La_La"       
+#' 
 #' "3" "La_Ld_Lrn4" "La_Ld"       
+#' 
 #' "3" "Lb_Lb_Lrn4" "Lb_Lb"       
+#' 
 #' "3" "Lc_La_Lrn4" "Lc_La"       
+#' 
 #' "3" "Lc_Lb_Lrn4" "Lc_Lb"       
+#' 
 #' "3" "Lc_Ld_Lrn4" "Lc_Ld"
 #' 
+#'
+#'
 #'   Then for all i in 3:1 (starting with the maximum  depth)
 #'   list the different aggregations to the upper level to perform.
 #'   So for i=3, aggregating to the second level will be done by computing 
@@ -119,11 +179,9 @@
 #'  
 #'  The same is applied to all the elements of the input parameter variables.
 #'  
-#'  @param .data a dataframe
-#'  @param variables a vector of character strings
-#'  @return a dataframe.
-
-
+#' @param .data a dataframe
+#' @param variables a vector of character strings
+#' @return a dataframe.
 #' @examples 
 #' .data=BigSyn::STtableA1
 #' variable="AA.cont1"
