@@ -2,7 +2,7 @@
 % Please edit documentation in R/reduceT_f.R
 \name{reduceT_f}
 \alias{reduceT_f}
-\title{Function that will convert cell and marginal ratios and overall total to cell values}
+\title{Reverse augmentT_f: Function that will convert cell and marginal ratios and overall total to cell values}
 \usage{
 reduceT_f(.data, variables, verbose = FALSE, hack = TRUE)
 }
@@ -16,7 +16,7 @@ reduceT_f(.data, variables, verbose = FALSE, hack = TRUE)
 \item{hack}{(default TRUE)}
 }
 \description{
-Function that will convert cell and marginal ratios and overall total to cell values
+Reverse augmentT_f: Function that will convert cell and marginal ratios and overall total to cell values
 }
 \details{
 this functions looks for the Augmentation parameters in the package object Augmentparameters[[tablename]]$percent
