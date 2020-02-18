@@ -16,15 +16,28 @@
 #' SATtableA<-BigSyn::SDPSYN2(ATtableA,asis=c("id1a", "id1b"))[[1]]
 #' problems<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&((SATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn1))&(SATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn2))&(SATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn3)))
 #' varcell=c("AA.cont1_Lb_La_Lrn1", "AA.cont1_Lb_La_Lrn2", "AA.cont1_Lb_La_Lrn3")
-#' varcellandpresenceind<-unlist(c(varcell,get_missingind(varcell,names(SATtableA)),get_presentind(varcell,names(SATtableA))))
+#' varcellandpresenceind<-unlist(c(varcell,get_missingind(c(varcell,"AA.cont1_Lb_La"),names(SATtableA)),get_presentind(varcell,names(SATtableA))))
 #' replacements<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&!((SATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn1))&(SATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn2))&(SATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn3)))
 #' SATtableA[problems,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
 #' SATtableA[replacements,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
 #' CSATtableA<-resampleT_f(SATtableA,variables)
 #' CSATtableA[problems,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
+#' problems2<-CSATtableA$AA.cont1_Lb_La>0&!is.na(CSATtableA$AA.cont1_Lb_La)&
+#' ((CSATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(CSATtableA$AA.cont1_Lb_La_Lrn1))&
+#'  (CSATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(CSATtableA$AA.cont1_Lb_La_Lrn2))&
+#'  (CSATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(CSATtableA$AA.cont1_Lb_La_Lrn3)))
+#' any(problems2);sum(problems2)
 #' RCSATtableA<-reduceT_f(CSATtableA,variables)
 #' RCSATtableA[problems,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))][1:3,]
-#' 
+#' problems3<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&
+#' ((RCSATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(RCSATtableA$AA.cont1_Lb_La_Lrn1))&
+#'  (RCSATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(RCSATtableA$AA.cont1_Lb_La_Lrn2))&
+#'  (RCSATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(RCSATtableA$AA.cont1_Lb_La_Lrn3)))
+#' any(problems3);sum(problems3)
+#' rbind(RCSATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))],
+#' CSATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))],
+#' SATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))])
+
 
 resampleT_f<-function(.data,variables,verbose=FALSE){
   .dataresampled<-.data
