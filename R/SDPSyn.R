@@ -113,6 +113,7 @@ fitmodel.ctree<-function(x,y,treeplotsavepath=NULL,...){
                             data=cbind(y2=y2, if(ncol(x2)==0){x}else{x2}), 
                             control = do.call(partykit::ctree_control,
                                               onlygoodargs(partykit::ctree_control,list(...))))
+  depthx<-try(treedepth(datact))
   if(!is.null(treeplotsavepath)){try(BigSyn::treetopdf(datact,treeplotsavepath))}
   splitnodeconditions <- daniRules(datact)
   splitnodeconditionsmerge<-paste0(splitnodeconditions,collapse="")
@@ -125,7 +126,10 @@ fitmodel.ctree<-function(x,y,treeplotsavepath=NULL,...){
   list(Rules=Rules,
        y=y,
        terminalnodes=terminalnodes,
-       shortlist=shortlist)}
+       shortlist=shortlist,
+       depth=depthx,
+       width=nrow(Rules),
+       treeplotsavepath=treeplotsavepath)}
 
 #' Function to get terminal node from a set of partitioning rules and new predictors
 #' 

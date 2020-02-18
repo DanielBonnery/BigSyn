@@ -1,22 +1,27 @@
 
-# BigSyn
+BigSyn
+======
 
-## Installation
+Installation
+------------
 
 `devtools::install_github("DanielBonnery/BigSyn")`
 
-## Package dependencies
+Package dependencies
+--------------------
 
-installed.packages()\[“BigSyn”,“Depends”\]
-`utilities::getDependencies("BigSyn")`
+installed.packages()\["BigSyn","Depends"\] `utilities::getDependencies("BigSyn")`
 
-## Demo
+Demo
+----
 
 To run the demo, just run: `demo(Synthesize_database)`
 
-## Step by step demo.
+Step by step demo.
+------------------
 
-## Shiny app to compare Synthetic and original data.
+Shiny app to compare Synthetic and original data.
+-------------------------------------------------
 
 To run the Shiny app,just run: `runComnpare()`
 

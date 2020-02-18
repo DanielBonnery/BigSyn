@@ -10,8 +10,8 @@
 #' treedepth(partykit::ctree(y ~ ., data=cbind(y=y,x)))
 treedepth<-function(x){
   if(is.element("SplittingNode",class(x))|is.element("TerminalNode",class(x))){
-  if(x$terminal){1}else{1+max(treedepth(x$right),treedepth(x$left))}
-    }else{
+    if(x$terminal){1}else{1+max(treedepth(x$right),treedepth(x$left))}
+  }else{
     1+depth(x)}}
 
 #' Ctree to pdf graph
@@ -41,8 +41,16 @@ treetopdf<-function(partykitctree,savepath){
 #' @description For each element of save parameters, look at the tree and produces the corresponding pdf.  It also removes all the information that is stored in the ouptut of parykit::Ctree, e.g. the data. It only keeps the tree and the rules to get it.
 #' @details Depends on plyr. Partykit output contain all the data that was used to grow the tree. this function removes the unwanted information.
 #' @examples
-#' y=iris$Species;x=iris[,-5]
-#' partykitctree <- partykit::ctree(y ~ ., data=cbind(y=y,x))
+#' data(TtableA,package="BigSyn")
+#' Sparameters<-Sparameters.default.f(ref.table=TtableA,asis=c("id1a","id1b"))
+#' STtableA1<-BigSyn::SDPSYN2(TtableA,asis=c("id1a","id1b"),Sparameters=Sparameters,fitmodelsavepath = tempdir())[[1]]
+#' pdfpath=file.path(tempdir(),"pdf")
+#' fitmodelsavepath=tempdir()
+#' dir.create(file.path)
+#'  Compilefits<-compilefits(Sparameters,
+#'  fitmodelsavepath=tempdir(),
+#'  pdfpath=file.path(tempdir(),"pdf"))
+#'  
 
 compilefits<-function(Sparameters,
                       fitmodelsavepath,
@@ -54,22 +62,22 @@ compilefits<-function(Sparameters,
     wherefitissaved<-file.path(fitmodelsavepath,paste0(Sparameter$variable,".rda"))
     #print(paste0("Now creating graphs for ",Sparameter$variable),quote=FALSE)
     load(wherefitissaved)
-      Sparameter$splits<-
+    Sparameter$splits<-
       lapply(Sparameters_i$splits,function(Split){
         if(is.element("fit.model",names(Split))){
           depthoftree<-9.6;
           widthoftree<-9.6;
-          try(widthoftree<-length(unique(party::where(Split$fit.model))));
-          try(depthoftree<-treedepth(Split$fit.model@tree));
-          Split$fit.text<-capture.output(Split$fit.model)
-          Split$fit.plotpath<-basename(paste0(tempfile(tmpdir = ".",pattern=paste0(Sparameter$variable,"_")),".pdf"))
+          try(widthoftree<-Split$fit.model$width);
+          try(depthoftree<-Split$fit.model$depth);
+          Split$fit.text    <-capture.output(Split$fit.model)
+          Split$fit.plotpath<-basename(paste0(tempfile(tmpdir = pdfpath,pattern=paste0(Sparameter$variable,"_")),".pdf"))
           treetopdf(Split$fit.model,file.path(pdfpath,Split$fit.plotpath))
           try(Split$tree<-Split$fit.model@tree[c("nodeID","criterion","terminal","psplit","ssplits","left","right")])
           Split$fit.model<-NULL
         }
         Split
       })
-      Sparameter
+    Sparameter
   },.progress=.progress)
 }
 
