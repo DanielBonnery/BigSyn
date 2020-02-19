@@ -426,7 +426,7 @@ SDPSYN2<-function(TtableA,
                                                                 treeplotsavefolder = treeplotsavefolder)
                                                   }},
                                     .progress = "text")
-  names(Sparameterswithfit)<-names(Sparameters)
+  names(Sparameterswithfit)<-stilltofit
   #  if(!is.null(fitmodelsavepath)){save(Sparameters0,file.path(fitmodelsavepath,"Sparameters0.rda"))}
   
   print("###########################################################################",quote = F)
