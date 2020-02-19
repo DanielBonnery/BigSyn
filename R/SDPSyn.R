@@ -364,7 +364,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'    preferredmethod="ctree",
 #'    defaultsynparameters=eval(formals(Sparameters.default.f)$defaultsynparameters))
 #' SATtableA<-BigSyn::SDPSYN2(ATtableA,asis=c("id1a", "id1b"))[[1]]
-#' problems<-STtableA$AA.present_Lb_La==1&STtableA$AA.present_Lb==0
+#' problems<-SATtableA$AA.present_Lb_La==1&SATtableA$AA.present_Lb==0
 #' mean(problems)
 #' Sparameters[["AA.present_Lb_La"]]
 #' xx<-function(x){
@@ -426,6 +426,7 @@ SDPSYN2<-function(TtableA,
                                                                 treeplotsavefolder = treeplotsavefolder)
                                                   }},
                                     .progress = "text")
+  names(Sparameterswithfit)<-names(Sparameters)
   #  if(!is.null(fitmodelsavepath)){save(Sparameters0,file.path(fitmodelsavepath,"Sparameters0.rda"))}
   
   print("###########################################################################",quote = F)
