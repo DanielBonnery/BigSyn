@@ -446,8 +446,12 @@ predictor.matrix.rate<-function(variables,
 #' @return 
 #' @examples
 #' data(TtableA)
-#' ref.table<-TtableA
-#' Sparameters.default.f(ref.table=TtableA)
+#' ATtableA<-augmentT_f(TtableA,variablespct="AA.cont1",variablesmax="AA.present")
+#' ref.table<-ATtableA
+#' Spa<-Sparameters.default.f(ref.table=ATtableA)
+#' names(Spa)<-lapply(Spa,function(x){x$variable})
+#' Spa$AA.present_La_Lb
+#' Spa$AA.cont1_La_Lb
 
 Sparameters.default.f<-
   function(ref.table,

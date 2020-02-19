@@ -9,14 +9,16 @@
 #' library(reshape2)
 #' library(data.table)
 #' data(TtableA,package="BigSyn")
-#' variable="AA.cont1"
-#' variables=variable
-#' ATtableA<-augmentT_f(TtableA,variables)
+#' variablepct="AA.cont1"
+#' variablespct=variablepct
+#' variablemax="AA.present"
+#' variablesmax=variablemax
+#' ATtableA<-augmentT_f(TtableA,variablesmax=variablesmax,variablespct=variablespct)
 #' set.seed(1)
 #' SATtableA<-BigSyn::SDPSYN2(ATtableA,asis=c("id1a", "id1b"))[[1]]
 #' problems<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&((SATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn1))&(SATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn2))&(SATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn3)))
 #' varcell=c("AA.cont1_Lb_La_Lrn1", "AA.cont1_Lb_La_Lrn2", "AA.cont1_Lb_La_Lrn3")
-#' varcellandpresenceind<-unlist(c(varcell,get_missingind(c(varcell,"AA.cont1_Lb_La"),names(SATtableA)),get_presentind(varcell,names(SATtableA))))
+#' varcellandpresenceind<-unlist(c(varcell,get_missingind(c(varcell,"AA.cont1_Lb_La"),names(SATtableA)),get_presentind(c(varcell,"AA.cont1_Lb_La"),names(SATtableA))))
 #' replacements<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&!((SATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn1))&(SATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn2))&(SATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn3)))
 #' SATtableA[problems,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
 #' SATtableA[replacements,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
@@ -27,16 +29,28 @@
 #'  (CSATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(CSATtableA$AA.cont1_Lb_La_Lrn2))&
 #'  (CSATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(CSATtableA$AA.cont1_Lb_La_Lrn3)))
 #' any(problems2);sum(problems2)
-#' RCSATtableA<-reduceT_f(CSATtableA,variables)
+#' RCSATtableA<-reduceT_f(CSATtableA,variablespct)
 #' RCSATtableA[problems,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))][1:3,]
-#' problems3<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&
+#' problems3<-RCSATtableA$AA.cont1_Lb_La>0&!is.na(RCSATtableA$AA.cont1_Lb_La)&
 #' ((RCSATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(RCSATtableA$AA.cont1_Lb_La_Lrn1))&
 #'  (RCSATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(RCSATtableA$AA.cont1_Lb_La_Lrn2))&
 #'  (RCSATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(RCSATtableA$AA.cont1_Lb_La_Lrn3)))
 #' any(problems3);sum(problems3)
-#' rbind(RCSATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))],
+#' AA<-rbind(RCSATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))],
 #' CSATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))],
 #' SATtableA[problems3,intersect(c("AA.cont1_Lb_La",varcellandpresenceind),names(RCSATtableA))])
+#' 
+#' AA$y=rep(c("RCSA","CSA","SA"),each=sum(problems3))
+#' AA$x=rep(1:sum(problems3),3)
+#' AA[order(AA$x),]
+#' library(ggplot2);library(dplyr)
+#' xx<-function(x){xxx<-x[sort(grep("present",names(x),value=TRUE))]
+#' xxx[xxx==0]<-NA
+#' StudyDataTools::ggplot_missing(xxx)}
+#' xx(ATtableA)
+#' xx(SATtableA)
+#' xx(CSATtableA)
+#' xx(RCSATtableA)
 
 
 resampleT_f<-function(.data,variables,verbose=FALSE){

@@ -8,17 +8,19 @@
 #' For each variable listed in Augmentparameters[[tablename]]$percent, it looks for the corresponding variable in
 #' .data and computes cell values from cell and marginal ratios and overall total
 #' @example
+#' library(BigSyn)
 #' library(reshape2)
 #' library(data.table)
 #'  hack=TRUE
 #'  verbose=TRUE
 #' data(TtableA,package="BigSyn")
-#' variable="AA.cont1"
-#' variables=variable
-#' ATtableA<-augmentT_f(TtableA,variables)
+#' variablemax="AA.present"
+#' variablesmax=variablemax
+#' variablepct="AA.cont1"
+#' variablespct=variablepct
+#' ATtableA<-augmentT_f(TtableA,variablesmax=variablesmax,variablespct=variablespct)
 #' .data=ATtableA
 #' RATtableA<-reduceT_f(ATtableA,variables)
-#' identical(NAto0(TtableA),NAto0(RATtableA[names(TtableA)]))
 #' all(sapply(1:nrow(TtableA),function(i){
 #' jj<-NAto0(TtableA)[i,]!=NAto0(RATtableA)[i,names(TtableA)]
 #' identical(signif(NAto0(TtableA)[i,jj],3),signif(NAto0(RATtableA)[i,names(TtableA)[jj]],3))}))

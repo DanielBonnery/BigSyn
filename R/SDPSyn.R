@@ -318,18 +318,64 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'@examples
 #'
 #'data(TtableA,package="BigSyn")
-#'TtableA$AA.cont1_La_La<-rowSums(TtableA[grep("AA.cont1_La_La",names(TtableA))])
+#'ATtableA=augmentT_f(TtableA,variablesmax="AA.present",variablespct="AA.cont1")
 #'asis=NULL;notpredictor=asis;nrep=1;synparameters=NULL;
 #'Sparameters=Sparameters.default.f(ref.table=TtableA,asis=asis,notpredictor=notpredictor,preferredmethod="ctree",
 #'defaultsynparameters=c(as.list(synparameters),
 #'eval(formals(Sparameters.default.f)$defaultsynparameters)[setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),c("",names(synparameters)))]));
-#'STtableA=plyr::rdply(nrep,TtableA[asis]);samplereportsavepath=NULL;stepbystepsavepath=NULL;doparallel=FALSE;recode=NULL;randomfitorder=TRUE;fitonly=FALSE;
+#'SATtableA=plyr::rdply(nrep,ATtableA[asis]);samplereportsavepath=NULL;stepbystepsavepath=NULL;doparallel=FALSE;recode=NULL;randomfitorder=TRUE;fitonly=FALSE;
 #'fitmodelsavepath=tempdir()
 #'treeplotsavefolder=tempdir()
 #'sapply(list.files(tempdir(),full.names = TRUE  ),file.remove)
-#'STtableA<-SDPSYN2(TtableA,asis=NULL,synparameters = defaultsynparameters,fitmodelsavepath = fitmodelsavepath,treeplotsavefolder=treeplotsavefolder)
+#'SATtableA<-SDPSYN2(ATtableA,asis=NULL,fitmodelsavepath = fitmodelsavepath,treeplotsavefolder=treeplotsavefolder)
 #'todisplay<-grep("La_La_Lrn1",names(STtableA[[1]]),value=T);
 #'STtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
+#' ##############################################################
+#' Controling that AA.present_La=0=>AA.present_La_Lb=0 in synthetic data
+#' library(BigSyn)
+#' library(reshape2)
+#' library(data.table)
+#' data(TtableA,package="BigSyn")
+#' variablepct="AA.cont1"
+#' variablespct=variablepct
+#' variablemax="AA.present"
+#' variablesmax=variablemax
+#' set.seed(1)
+#' asis=c("id1a", "id1b")
+#'                   fitmodelsavepath=NULL
+#'                   treeplotsavefolder=NULL
+#'                   samplereportsavepath=NULL
+#'                   stepbystepsavepath=NULL
+#'                   doparallel=TRUE
+#'                   recode=NULL
+#'                   saveeach=200
+#'                   randomfitorder=TRUE
+#'                   fitonly=FALSE
+#'                   
+#' variablemax="AA.present"
+#' variablesmax=variablemax
+#' variablepct="AA.cont1"
+#' variablespct=variablepct
+#' ATtableA<-augmentT_f(TtableA,variablesmax=variablesmax,variablespct=variablespct)
+#' TtableA<-ATtableA
+#' STtableA<-ATtableA[asis]
+#' Sparameters=Sparameters.default.f(ref.table=ATtableA,asis=c("id1a", "id1b"),
+#'    notpredictor=NULL,
+#'    preferredmethod="ctree",
+#'    defaultsynparameters=eval(formals(Sparameters.default.f)$defaultsynparameters))
+#' SATtableA<-BigSyn::SDPSYN2(ATtableA,asis=c("id1a", "id1b"))[[1]]
+#' problems<-STtableA$AA.present_Lb_La==1&STtableA$AA.present_Lb==0
+#' mean(problems)
+#' Sparameters[["AA.present_Lb_La"]]
+#' xx<-function(x){
+#' xxx<-x[sort(grep("present",names(x),value=TRUE))]
+#' xxx[xxx==0]<-NA
+#' StudyDataTools::ggplot_missing(xxx)}
+#' xx(ATtableA)
+#' xx(SATtableA)
+
+
+
 
 SDPSYN2<-function(TtableA,
                   asis=NULL,
@@ -366,12 +412,19 @@ SDPSYN2<-function(TtableA,
   print(paste0(Sys.time()," -- ",length(stilltofit)," models remaining, but my friends help me"), quote = F)
   if(randomfitorder&length(stilltofit)>0){stilltofit<-stilltofit[order(runif(length(stilltofit)))]}
   Sparameterswithfit<-plyr::llply(stilltofit,
-                                  function(variable){if(!is.null(fitmodelsavepath)){
+                                  function(variable){
+                                    if(!is.null(fitmodelsavepath)){
                                     if(!is.element(variable,gsub(".rda","",list.files(fitmodelsavepath)))){#We retest to allow parallel computing
                                       fitthemodel(Sparameters_i=Sparameters[[variable]],
                                                   fitmodelsavepath=fitmodelsavepath,
                                                   TtableANAto0=TtableANAto0,
-                                                  treeplotsavefolder = treeplotsavefolder)}}},
+                                                  treeplotsavefolder = treeplotsavefolder)}
+                                      NULL}else{
+                                                    fitthemodel(Sparameters_i=Sparameters[[variable]],
+                                                                fitmodelsavepath=fitmodelsavepath,
+                                                                TtableANAto0=TtableANAto0,
+                                                                treeplotsavefolder = treeplotsavefolder)
+                                                  }},
                                     .progress = "text")
   #  if(!is.null(fitmodelsavepath)){save(Sparameters0,file.path(fitmodelsavepath,"Sparameters0.rda"))}
   
