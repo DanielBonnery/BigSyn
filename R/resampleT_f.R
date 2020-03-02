@@ -22,7 +22,7 @@
 #' replacements<-SATtableA$AA.cont1_Lb_La>0&!is.na(SATtableA$AA.cont1_Lb_La)&!((SATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn1))&(SATtableA$AA.cont1_Lb_La_Lrn2==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn2))&(SATtableA$AA.cont1_Lb_La_Lrn3==0|is.na(SATtableA$AA.cont1_Lb_La_Lrn3)))
 #' SATtableA[problems,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
 #' SATtableA[replacements,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
-#' CSATtableA<-resampleT_f(SATtableA,variables)
+#' CSATtableA<-resampleT_f(SATtableA,variablespct)
 #' CSATtableA[problems,c("AA.cont1_Lb_La",varcellandpresenceind)][1:3,]
 #' problems2<-CSATtableA$AA.cont1_Lb_La>0&!is.na(CSATtableA$AA.cont1_Lb_La)&
 #' ((CSATtableA$AA.cont1_Lb_La_Lrn1==0|is.na(CSATtableA$AA.cont1_Lb_La_Lrn1))&

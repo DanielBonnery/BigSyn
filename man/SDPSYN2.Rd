@@ -71,16 +71,61 @@ This function is doing both the fitting and the sampling.
 \examples{
 
 data(TtableA,package="BigSyn")
-TtableA$AA.cont1_La_La<-rowSums(TtableA[grep("AA.cont1_La_La",names(TtableA))])
+ATtableA=augmentT_f(TtableA,variablesmax="AA.present",variablespct="AA.cont1")
 asis=NULL;notpredictor=asis;nrep=1;synparameters=NULL;
 Sparameters=Sparameters.default.f(ref.table=TtableA,asis=asis,notpredictor=notpredictor,preferredmethod="ctree",
 defaultsynparameters=c(as.list(synparameters),
 eval(formals(Sparameters.default.f)$defaultsynparameters)[setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),c("",names(synparameters)))]));
-STtableA=plyr::rdply(nrep,TtableA[asis]);samplereportsavepath=NULL;stepbystepsavepath=NULL;doparallel=FALSE;recode=NULL;randomfitorder=TRUE;fitonly=FALSE;
+SATtableA=plyr::rdply(nrep,ATtableA[asis]);samplereportsavepath=NULL;stepbystepsavepath=NULL;doparallel=FALSE;recode=NULL;randomfitorder=TRUE;fitonly=FALSE;
 fitmodelsavepath=tempdir()
 treeplotsavefolder=tempdir()
 sapply(list.files(tempdir(),full.names = TRUE  ),file.remove)
-STtableA<-SDPSYN2(TtableA,asis=NULL,synparameters = defaultsynparameters,fitmodelsavepath = fitmodelsavepath,treeplotsavefolder=treeplotsavefolder)
+SATtableA<-SDPSYN2(ATtableA,asis=NULL,fitmodelsavepath = fitmodelsavepath,treeplotsavefolder=treeplotsavefolder)
 todisplay<-grep("La_La_Lrn1",names(STtableA[[1]]),value=T);
 STtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
+##############################################################
+Controling that AA.present_La=0=>AA.present_La_Lb=0 in synthetic data
+library(BigSyn)
+library(reshape2)
+library(data.table)
+data(TtableA,package="BigSyn")
+variablepct="AA.cont1"
+variablespct=variablepct
+variablemax="AA.present"
+variablesmax=variablemax
+set.seed(1)
+asis=c("id1a", "id1b")
+                  fitmodelsavepath=NULL
+                  treeplotsavefolder=NULL
+                  samplereportsavepath=NULL
+                  stepbystepsavepath=NULL
+                  doparallel=TRUE
+                  recode=NULL
+                  saveeach=200
+                  randomfitorder=TRUE
+                  fitonly=FALSE
+                  
+variablemax="AA.present"
+variablesmax=variablemax
+variablepct="AA.cont1"
+variablespct=variablepct
+ATtableA<-augmentT_f(TtableA,variablesmax=variablesmax,variablespct=variablespct)
+TtableA<-ATtableA
+STtableA<-ATtableA[asis]
+Sparameters=Sparameters.default.f(ref.table=ATtableA,asis=c("id1a", "id1b"),
+   notpredictor=NULL,
+   preferredmethod="ctree",
+   defaultsynparameters=eval(formals(Sparameters.default.f)$defaultsynparameters))
+SATtableA<-BigSyn::SDPSYN2(ATtableA,asis=c("id1a", "id1b"))[[1]]
+problems<-SATtableA$AA.present_Lb_La==1&SATtableA$AA.present_Lb==0
+mean(problems)
+Sparameters[["AA.present_Lb_La"]]
+library(dplyr)
+library(ggplot2)
+xx<-function(x){
+xxx<-x[sort(grep("present",names(x),value=TRUE))]
+xxx[xxx==0]<-NA
+StudyDataTools::ggplot_missing(xxx)}
+xx(ATtableA)
+xx(SATtableA)
 }

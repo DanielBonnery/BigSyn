@@ -367,6 +367,8 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' problems<-SATtableA$AA.present_Lb_La==1&SATtableA$AA.present_Lb==0
 #' mean(problems)
 #' Sparameters[["AA.present_Lb_La"]]
+#' library(dplyr)
+#' library(ggplot2)
 #' xx<-function(x){
 #' xxx<-x[sort(grep("present",names(x),value=TRUE))]
 #' xxx[xxx==0]<-NA

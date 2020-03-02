@@ -27,6 +27,14 @@ For each element of save parameters, look at the tree and produces the correspon
 Depends on plyr. Partykit output contain all the data that was used to grow the tree. this function removes the unwanted information.
 }
 \examples{
-y=iris$Species;x=iris[,-5]
-partykitctree <- partykit::ctree(y ~ ., data=cbind(y=y,x))
+data(TtableA,package="BigSyn")
+Sparameters<-Sparameters.default.f(ref.table=TtableA,asis=c("id1a","id1b"))
+STtableA1<-BigSyn::SDPSYN2(TtableA,asis=c("id1a","id1b"),Sparameters=Sparameters,fitmodelsavepath = tempdir())[[1]]
+pdfpath=file.path(tempdir(),"pdf")
+fitmodelsavepath=tempdir()
+dir.create(file.path)
+ Compilefits<-compilefits(Sparameters,
+ fitmodelsavepath=tempdir(),
+ pdfpath=file.path(tempdir(),"pdf"))
+ 
 }
