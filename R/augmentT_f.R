@@ -24,7 +24,10 @@
 #' AA.cont1_Lc_La_Lrn4, AA.cont1_Lc_Lb_Lrn4, AA.cont1_Lc_Ld_Lrn4
 #' 
 #' The programs computes the number of marginal variables 
-#' with the function looks for  BigSyn::get_cellXXmarginscount.
+#' with the function
+#' 
+#'     BigSyn::get_cellXXmarginscount.
+#' 
 #' Here it is 3
 #' 
 #' The program creates the following character matrix, named patterns:
@@ -257,11 +260,13 @@ augmentpctT_f<-function(.data,variables,verbose=getOption("verbose")){
 #' The results is this:
 #' 
 #' AA.present_La_La_Lrn1, AA.present_La_Lb_Lrn1, AA.present_La_Lc_Lrn1, 
+#' 
 #' ...
+#' 
 #' AA.present_Lc_La_Lrn4, AA.present_Lc_Lb_Lrn4, AA.present_Lc_Ld_Lrn4
 #' 
 #' The programs computes the number of marginal variables 
-#' with the function looks for  BigSyn::get_cellXXmarginscount.
+#' with the function BigSyn::get_cellXXmarginscount.
 #' Here it is 3
 #' 
 #' The program creates the following character matrix, named patterns:
@@ -386,19 +391,32 @@ augmentpctT_f<-function(.data,variables,verbose=getOption("verbose")){
 #'   list the different aggregations to the upper level to perform.
 #'   So for i=3, aggregating to the second level will be done by computing 
 #'   the variables :
+#'   
 #'   AA.cont1_La_La, AA.cont1_La_Ld, AA.cont1_Lb_Lb, AA.cont1_Lc_La, 
+#'   
 #'   AA.cont1_Lc_Lb, AA.cont1_Lc_Ld, AA.cont1_La_Lb, AA.cont1_La_Lc, 
+#'   
 #'   AA.cont1_Lb_La, AA.cont1_Lb_Lc, AA.cont1_Lb_Ld, AA.cont1_Lc_Lc
 #'  
-#'  For example
-#'  AA.cont1_La_La =rowSums(.data([,c("AA.cont1_La_La_Lrn1", "AA.cont1_La_La_Lrn2", "AA.cont1_La_La_Lrn3", "AA.cont1_La_La_Lrn4"),drop=FALSE])
+#'  For example:
+#'  
+#'  AA.cont1_La_La =rowSums(.data([,c("AA.cont1_La_La_Lrn1", 
+#'                                    "AA.cont1_La_La_Lrn2", 
+#'                                    "AA.cont1_La_La_Lrn3", 
+#'                                    "AA.cont1_La_La_Lrn4"),drop=FALSE])
 #'  
 #'  For i=2  aggregating to the upper level will be done by computing 
 #'  the variables :
-#'  AA.cont1_La, AA.cont1_Lb, AA.cont1_Lc
-#'  AA.cont1_La =rowSums(.data([,c("AA.cont1_La_La", "AA.cont1_La_Ld", "AA.cont1_La_Lb", "AA.cont1_La_Lc"),drop=FALSE])
 #'  
-#'  For i=1 aggregating to theupper level will be done by computng the variable
+#'  AA.cont1_La, AA.cont1_Lb, AA.cont1_Lc
+#'  
+#'  AA.cont1_La =rowSums(.data([,c("AA.cont1_La_La", 
+#'                                 "AA.cont1_La_Ld", 
+#'                                 "AA.cont1_La_Lb", 
+#'                                 "AA.cont1_La_Lc"),drop=FALSE])
+#'  
+#'  For i=1 aggregating to theupper level will be done by computng the variable:
+#'  
 #'   AA.cont1_=rowSums(.data([,c("AA.cont1_La", "AA.cont1_Lb", "AA.cont1_Lc"),drop=FALSE])
 #'  
 #'  The computation of the marginal totals is done, the second step is the computation of the 

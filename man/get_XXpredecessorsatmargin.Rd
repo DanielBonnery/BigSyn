@@ -28,15 +28,27 @@ get cell predecessors at margin
 }
 \details{
 if XXs is "aa.xoijj_a_1_f_1" and refXXs contains "aa.xoijj_a_1_e_1"  and marginpos=3 returns "aa.xoijj_a_1_e_1"
+
 if XXs is "aa.xoijj_a_1_f_2" and refXXs contains "aa.xoijj_a_1_f_1"  and marginpos=NULL returns "aa.xoijj_a_1_f_1"
+
 if XXs is "id1" and  iscellXX=FALSE whatever refXXs returns character(0)
+
 if XXs is "" and iscellXX=FALSE whatever refXXs returns character(0)
+
 if XXs is "b_1_f_1"  and iscellXX=TRUE and refXXs contains "a_1_f_1" returns "a_1_f_1"
 }
 \examples{
-get_XXpredecessoratmargin(XXs="aa.x_1_2_3_4", refXXs=c("bb.x_1_2_2_4","aa.x_1_2_2_4","aa.x_1_1_3_4"),2,iscellXX=FALSE)
-get_XXpredecessoratmargin(XXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),iscellXX=TRUE)
-get_XXpredecessoratmargin(XXs="1_1_3_4",refXXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),iscellXX=TRUE)
+get_XXpredecessoratmargin(
+  XXs="aa.x_1_2_3_4", 
+  refXXs=c("bb.x_1_2_2_4","aa.x_1_2_2_4","aa.x_1_1_3_4"),
+  2,iscellXX=FALSE)
+get_XXpredecessoratmargin(
+  XXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),
+  iscellXX=TRUE)
+get_XXpredecessoratmargin(
+  XXs="1_1_3_4",
+  refXXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),
+  iscellXX=TRUE)
 data(XKA)
 cells<-unique(get_cellrn(XKA$variables))
 get_XXpredecessoratmargin(cells,marginpos=1,iscellXX=TRUE)

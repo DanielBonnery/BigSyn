@@ -297,6 +297,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 }
 
 #' General SDP function.
+#' 
 #' @param TtableA a dataframe  to synthesize
 #' @param asis list of variable names from TtableA to keep as is (e.g. not to synthesize)
 #' @param notpredictor list of variable names which should not be used as predictors
@@ -406,7 +407,8 @@ SDPSYN2<-function(TtableA,
                     asis=asis,
                     notpredictor=notpredictor,
                     preferredmethod="ctree",
-                    defaultsynparameters=c(as.list(synparameters),eval(formals(Sparameters.default.f)$defaultsynparameters)[setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),c("",names(synparameters)))])),
+                    defaultsynparameters=c(as.list(synparameters),
+                                           eval(formals(Sparameters.default.f)$defaultsynparameters)[setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),c("",names(synparameters)))])),
                   STtableA=if(is.null(asis)){data.frame(.n=rep(nrep,each=nrow(TtableA)))}else{plyr::ddply(data.frame(.n=nrep),~.n,function(d){TtableA[asis]})},
                   fitmodelsavepath=NULL,
                   treeplotsavefolder=NULL,

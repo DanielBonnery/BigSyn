@@ -2,14 +2,20 @@
 % Please edit documentation in R/daniRules.R
 \name{\%notin\%}
 \alias{\%notin\%}
-\title{`%notin%`}
+\title{Not in operator}
 \usage{
 ... \%notin\% NA
 }
 \description{
-negation de `%in%`
+negation de `\%in\%`
+}
+\details{
+This function is used in the function `daniRules`.
 }
 \examples{
 1\%notin\%2:3
 1\%notin\%1:3
+}
+\seealso{
+daniRules
 }

@@ -15,15 +15,25 @@
 #'  origorder=1:N)
 #'  groupvar=".group"
 #'  sortvar="y"
-#'.data2=plyr::ddply(.data,".group",function(d){d$intraorder=order(d[[sortvar]]);d$neworder=d$origorder[order(order(d[[sortvar]]))];d})
+#'.data2=plyr::ddply(.data,".group",
+#'                   function(d){d$intraorder=order(d[[sortvar]]);
+#' d$neworder=d$origorder[order(order(d[[sortvar]]))];d})
 #' .data4=.data2[.data2[[groupvar]]=="a",];.data4[.data4$intraorder,]
 #' cbind(.data,"|",.data2)
 #' cbind(.data,"|",.data2[order(.data2$origorder),])
 #' cbind(.data[order(order(.data2$origorder)),],"|",.data2)
-#' .data3=cbind(.data,"|",.data2[order(.data2$neworder),]);.data3[.data[[groupvar]]=="a",];.data3
-#' .data3=cbind(.data,"|",.data[order(order(.data2$origorder)),][order(.data2$neworder),]);.data3[.data[[groupvar]]=="a",]
-#' .data3=cbind(.data,"|",.data[order(order(.data2$origorder))[order(.data2$neworder)],]);.data3[.data[[groupvar]]=="a",]
-#' cbind(.data,I="|",sorttablewithingroup(.data,groupvar,sortvar),I="|",sorttablewithingroup(.data,groupvar,sortvar,decreasing=TRUE),I="|",sorttablewithingroup(.data,NULL,groupvar,decreasing=TRUE))
+#' .data3=cbind(.data,"|",
+#'              .data2[order(.data2$neworder),]);
+#' .data3[.data[[groupvar]]=="a",];.data3
+#' .data3=cbind(.data,"|",
+#'              .data[order(order(.data2$origorder)),][order(.data2$neworder),]);
+#' .data3[.data[[groupvar]]=="a",]
+#' .data3=cbind(.data,"|",
+#'              .data[order(order(.data2$origorder))[order(.data2$neworder)],]);
+#' .data3[.data[[groupvar]]=="a",]
+#' cbind(.data,I="|",sorttablewithingroup(.data,groupvar,sortvar),I="|",
+#'                   sorttablewithingroup(.data,groupvar,sortvar,decreasing=TRUE),
+#'                   I="|",sorttablewithingroup(.data,NULL,groupvar,decreasing=TRUE))
 
 sorttablewithingroup<-function(.data,groupvar,sortvar,decreasing=FALSE){
     if(!is.null(groupvar)){
@@ -233,19 +243,32 @@ get_cellXXgroup<-function(x,marginpos,iscellXX=TRUE){sapply(x,function(y){
 
 #' get cell predecessors at margin
 #' 
-#' @details if XXs is "aa.xoijj_a_1_f_1" and refXXs contains "aa.xoijj_a_1_e_1"  and marginpos=3 returns "aa.xoijj_a_1_e_1"
+#' @details 
+#' if XXs is "aa.xoijj_a_1_f_1" and refXXs contains "aa.xoijj_a_1_e_1"  and marginpos=3 returns "aa.xoijj_a_1_e_1"
+#' 
 #' if XXs is "aa.xoijj_a_1_f_2" and refXXs contains "aa.xoijj_a_1_f_1"  and marginpos=NULL returns "aa.xoijj_a_1_f_1"
+#' 
 #' if XXs is "id1" and  iscellXX=FALSE whatever refXXs returns character(0)
+#' 
 #' if XXs is "" and iscellXX=FALSE whatever refXXs returns character(0)
+#' 
 #' if XXs is "b_1_f_1"  and iscellXX=TRUE and refXXs contains "a_1_f_1" returns "a_1_f_1"  
 #' @param XXs a vector of character strings 
 #' @param refXXs a vector of character strings containing the potential predecessors
 #' @param marginpos a vector of integers
 #' @return a vector of character strings
 #' @examples 
-#' get_XXpredecessoratmargin(XXs="aa.x_1_2_3_4", refXXs=c("bb.x_1_2_2_4","aa.x_1_2_2_4","aa.x_1_1_3_4"),2,iscellXX=FALSE)
-#' get_XXpredecessoratmargin(XXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),iscellXX=TRUE)
-#' get_XXpredecessoratmargin(XXs="1_1_3_4",refXXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),iscellXX=TRUE)
+#' get_XXpredecessoratmargin(
+#'   XXs="aa.x_1_2_3_4", 
+#'   refXXs=c("bb.x_1_2_2_4","aa.x_1_2_2_4","aa.x_1_1_3_4"),
+#'   2,iscellXX=FALSE)
+#' get_XXpredecessoratmargin(
+#'   XXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),
+#'   iscellXX=TRUE)
+#' get_XXpredecessoratmargin(
+#'   XXs="1_1_3_4",
+#'   refXXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),
+#'   iscellXX=TRUE)
 #' data(XKA)
 #' cells<-unique(get_cellrn(XKA$variables))
 #' get_XXpredecessoratmargin(cells,marginpos=1,iscellXX=TRUE)
@@ -298,20 +321,20 @@ get_XXpredecessoratmargin<-function(XXs,refXXs=XXs,marginpos=NULL,iscellXX=FALSE
 is.variable<-function(x){sapply(x,function(y){grepl(".",y,fixed = TRUE)})} 
 
 
-#' get variable predecessors at margin
-#' 
-#' @details if x is "a_1_f_1_aa.xoijj" returns c("a","1","f","1")
-#' @param x a vector of character strings 
-#' @param cells a vector of character strings containing the potential predecessors
-#' @param marginpos a vector of integers
-#' @return a vector of character strings
-#' @examples 
-#' get_XXpredecessoratmargin(cellXXs="aa.x_1_2_3_4", refcellXXs=c("bb.x_1_2_2_4","aa.x_1_2_2_4","aa.x_1_1_3_4"),2,iscellXX=FALSE)
-#' get_XXpredecessoratmargin(cellXXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),iscellXX=FALSE)
-#' data(XKA)
-#' cells<-unique(get_cellrn(XKA$variables))
-#' get_XXpredecessoratmargin(cells,marginpos=1,iscellXX=TRUE)
-#' get_XXpredecessoratmargin(cells[10],cells,1,iscellXX=TRUE)
+# get variable predecessors at margin
+# 
+# @details if x is "a_1_f_1_aa.xoijj" returns c("a","1","f","1")
+# @param x a vector of character strings 
+# @param cells a vector of character strings containing the potential predecessors
+# @param marginpos a vector of integers
+# @return a vector of character strings
+# @examples 
+# get_XXpredecessoratmargin(cellXXs="aa.x_1_2_3_4", refcellXXs=c("bb.x_1_2_2_4","aa.x_1_2_2_4","aa.x_1_1_3_4"),2,iscellXX=FALSE)
+# get_XXpredecessoratmargin(cellXXs=c("1_2_2_4","1_2_2_4","1_1_3_4","1_1_3_3"),iscellXX=FALSE)
+# data(XKA)
+# cells<-unique(get_cellrn(XKA$variables))
+# get_XXpredecessoratmargin(cells,marginpos=1,iscellXX=TRUE)
+# get_XXpredecessoratmargin(cells[10],cells,1,iscellXX=TRUE)
 
 #get_variablepredecessoratmargin<-function(variables,refvariables=variables,marginpos=NULL){
 #  refcellrns<-unique(get_cellrn(variables))

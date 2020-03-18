@@ -38,12 +38,15 @@ treetopdf<-function(partykitctree,savepath){
 #' @param fitmodelsavepath: a file path where to store the pdf of the plot
 #' @param pdfpath where to save the pdfs
 #' @param .progress: a string, name of the progress bar to use, see plyr::create_progress_bar
-#' @description For each element of save parameters, look at the tree and produces the corresponding pdf.  It also removes all the information that is stored in the ouptut of parykit::Ctree, e.g. the data. It only keeps the tree and the rules to get it.
-#' @details Depends on plyr. Partykit output contain all the data that was used to grow the tree. this function removes the unwanted information.
+#' @description For each element of save parameters, look at the tree and produces the corresponding pdf.
+#'It also removes all the information that is stored in the ouptut of parykit::Ctree, e.g. the data. It only keeps the tree and the rules to get it.
+#' @details Depends on plyr. Partykit output contain all the data that was used to grow the tree. 
+#' This function removes the unwanted information.
 #' @examples
 #' data(TtableA,package="BigSyn")
 #' Sparameters<-Sparameters.default.f(ref.table=TtableA,asis=c("id1a","id1b"))
-#' STtableA1<-BigSyn::SDPSYN2(TtableA,asis=c("id1a","id1b"),Sparameters=Sparameters,fitmodelsavepath = tempdir())[[1]]
+#' STtableA1<-BigSyn::SDPSYN2(TtableA,asis=c("id1a","id1b"),
+#'                            Sparameters=Sparameters,fitmodelsavepath = tempdir())[[1]]
 #' pdfpath=file.path(tempdir(),"pdf")
 #' fitmodelsavepath=tempdir()
 #' dir.create(file.path)

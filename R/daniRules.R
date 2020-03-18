@@ -1,9 +1,12 @@
-#' `%notin%` 
-#' @description negation de `%in%`
+#' Not in operator
+#' 
+#' @description negation de `\%in\%`
+#' @details 
+#' This function is used in the function `daniRules`.
 #' @examples
 #' 1%notin%2:3
 #' 1%notin%1:3
-
+#' @seealso daniRules
 `%notin%` <- Negate(`%in%`)
 
 #' daniRules

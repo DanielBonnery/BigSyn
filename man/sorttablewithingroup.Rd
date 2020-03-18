@@ -33,13 +33,23 @@ N=10
  origorder=1:N)
  groupvar=".group"
  sortvar="y"
-.data2=plyr::ddply(.data,".group",function(d){d$intraorder=order(d[[sortvar]]);d$neworder=d$origorder[order(order(d[[sortvar]]))];d})
+.data2=plyr::ddply(.data,".group",
+                  function(d){d$intraorder=order(d[[sortvar]]);
+d$neworder=d$origorder[order(order(d[[sortvar]]))];d})
 .data4=.data2[.data2[[groupvar]]=="a",];.data4[.data4$intraorder,]
 cbind(.data,"|",.data2)
 cbind(.data,"|",.data2[order(.data2$origorder),])
 cbind(.data[order(order(.data2$origorder)),],"|",.data2)
-.data3=cbind(.data,"|",.data2[order(.data2$neworder),]);.data3[.data[[groupvar]]=="a",];.data3
-.data3=cbind(.data,"|",.data[order(order(.data2$origorder)),][order(.data2$neworder),]);.data3[.data[[groupvar]]=="a",]
-.data3=cbind(.data,"|",.data[order(order(.data2$origorder))[order(.data2$neworder)],]);.data3[.data[[groupvar]]=="a",]
-cbind(.data,I="|",sorttablewithingroup(.data,groupvar,sortvar),I="|",sorttablewithingroup(.data,groupvar,sortvar,decreasing=TRUE),I="|",sorttablewithingroup(.data,NULL,groupvar,decreasing=TRUE))
+.data3=cbind(.data,"|",
+             .data2[order(.data2$neworder),]);
+.data3[.data[[groupvar]]=="a",];.data3
+.data3=cbind(.data,"|",
+             .data[order(order(.data2$origorder)),][order(.data2$neworder),]);
+.data3[.data[[groupvar]]=="a",]
+.data3=cbind(.data,"|",
+             .data[order(order(.data2$origorder))[order(.data2$neworder)],]);
+.data3[.data[[groupvar]]=="a",]
+cbind(.data,I="|",sorttablewithingroup(.data,groupvar,sortvar),I="|",
+                  sorttablewithingroup(.data,groupvar,sortvar,decreasing=TRUE),
+                  I="|",sorttablewithingroup(.data,NULL,groupvar,decreasing=TRUE))
 }

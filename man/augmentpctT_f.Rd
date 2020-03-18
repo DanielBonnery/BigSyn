@@ -42,7 +42,10 @@ AA.cont1_La_La_Lrn4, AA.cont1_La_Ld_Lrn4, AA.cont1_Lb_Lb_Lrn4,
 AA.cont1_Lc_La_Lrn4, AA.cont1_Lc_Lb_Lrn4, AA.cont1_Lc_Ld_Lrn4
 
 The programs computes the number of marginal variables 
-with the function looks for  BigSyn::get_cellXXmarginscount.
+with the function
+
+    BigSyn::get_cellXXmarginscount.
+
 Here it is 3
 
 The program creates the following character matrix, named patterns:
