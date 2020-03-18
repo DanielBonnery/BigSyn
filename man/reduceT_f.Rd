@@ -4,7 +4,7 @@
 \alias{reduceT_f}
 \title{Reverse augmentT_f: Function that will convert cell and marginal ratios and overall total to cell values}
 \usage{
-reduceT_f(.data, variables, verbose = FALSE, hack = TRUE)
+reduceT_f(.data, variables, verbose = FALSE, hack = TRUE, recalibrateonly = F)
 }
 \arguments{
 \item{.data}{data frame to "reduce"}
@@ -22,4 +22,68 @@ Reverse augmentT_f: Function that will convert cell and marginal ratios and over
 this functions looks for the Augmentation parameters in the package object Augmentparameters[[tablename]]$percent
 For each variable listed in Augmentparameters[[tablename]]$percent, it looks for the corresponding variable in
 .data and computes cell values from cell and marginal ratios and overall total
+}
+\examples{
+library(BigSyn)
+library(reshape2)
+library(data.table)
+ hack=TRUE
+ verbose=TRUE
+data(TtableA,package="BigSyn")
+variablemax="AA.present"
+variablesmax=variablemax
+variablepct="AA.cont1"
+variablespct=variablepct
+variables=variablespct
+ATtableA<-augmentT_f(TtableA,
+                     variablesmax=variablesmax,
+                     variablespct=variablespct)
+.data=ATtableA
+RATtableA<-reduceT_f(.data = ATtableA,variables=variablespct)
+all(sapply(1:nrow(TtableA),function(i){
+jj<-NAto0(TtableA)[i,]!=NAto0(RATtableA)[i,names(TtableA)]
+identical(signif(NAto0(TtableA)[i,jj],3),
+          signif(NAto0(RATtableA)[i,names(TtableA)[jj]],3))}))
+randomcheck<-function(i=NULL){if(is.null(i)){
+         i<-sample(1:nrow(TtableA),1)};
+variablex="AA.cont1_La_La";
+vx=c("AA.cont1_La_La_Lrn1", 
+     "AA.cont1_La_La_Lrn2", 
+     "AA.cont1_La_La_Lrn3", 
+     "AA.cont1_La_La_Lrn4");
+BigSyn::get_presentind(variables = vx,refvariables = names(TtableA))->px
+BigSyn::get_missingind(x=vx,variables = names(TtableA))->mx
+list(i=i,
+     total=ATtableA[i,"AA.cont1_"],
+     LaRatio=ATtableA[i,"AA.cont1_La"],
+     LaLaRatio=ATtableA[i,"AA.cont1_La_La"],
+     LaLaTotal=ATtableA[i,"AA.cont1_"]*
+     ATtableA[i,"AA.cont1_La"]*
+     ATtableA[i,"AA.cont1_La_La"],
+rbind(rat=RATtableA[i,vx],at=ATtableA[i,vx],t=TtableA[i,vx]),
+rbind(ratp=RATtableA[i,px],atp=ATtableA[i,px],tp=TtableA[i,px]),
+rbind(ratp=RATtableA[i,mx],atp=ATtableA[i,mx],tp=TtableA[i,mx]))}
+randomcheck(19)
+randomcheck(109)
+randomcheck(57)
+nrep=1
+SATtableA<-SDPSYN2(ATtableA,asis=c("id1a","id1b"),
+                  fitmodelsavepath = NULL,treeplotsavefolder = NULL)[[1]]
+CSATtableA<-resampleT_f(SATtableA,"AA.cont1")
+RSATtableA<-reduceT_f(.data = SATtableA,variables="AA.cont1",verbose=TRUE)
+RCSATtableA<-reduceT_f(.data = CSATtableA,variables="AA.cont1",verbose=TRUE)
+toto=function(.datareduced,.data){
+ w<-merge(.datareduced[c("id1a","id1b","AA.cont1_")],
+          .data[c("id1a","id1b","AA.cont1_")],by=c("id1a","id1b"))
+ plot(w$AA.cont1_.x,w$AA.cont1_.y)}
+toto(.datareduced,.data)
+toto2=function(.datareduced){
+ .datareduced$AA.cont1_check<-
+        rowSums(.datareduced[grep("Lrn",grep("AA.cont1_",names(.datareduced),value=T),value=T)],
+                na.rm=T)
+ with(.datareduced,plot(AA.cont1_,AA.cont1_check))
+}
+toto2(RATtableA)
+toto2(RSATtableA)
+toto2(RCSATtableA)
 }

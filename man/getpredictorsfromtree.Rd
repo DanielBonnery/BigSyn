@@ -15,7 +15,8 @@ getpredictorsfromtree(tree, predictors)
 
 }
 \description{
-for each terminal node of the tree, give the elements of "predictors" who appear in the node definition
+for each terminal node of the tree, give the elements of 
+"predictors" who appear in the node definition
 }
 \examples{
 tree<-partykit::ctree(Petal.Width~.,iris)

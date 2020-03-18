@@ -9,13 +9,22 @@ getpredictorsfromcaptureoutput(tree, predictors)
 \arguments{
 \item{tree}{same format than output of partykit::ctree}
 
-\item{predictors}{list of variables}
+\item{predictors}{a vector of character strings, indicating  variable names.}
 }
 \value{
-
+a named vector of booleans. The names correspond to `predictors`, and the boolean value
+indicates if the variables was actually used in the fitted model or not.
 }
 \description{
-for each terminal node of the tree, give the elements of "predictors" who appear in the node definition
+for each terminal node of the tree, 
+give the elements of "predictors" who appear in the node definition
+}
+\details{
+A basic `grep` function is applied to each potential predictor. 
+It is returned if it appears in the rules.
+}
+\examples{
+getpredictorsfromcaptureoutput(party::ctree(Petal.Width~.,iris),names(iris))
 }
 \seealso{
 daniRules

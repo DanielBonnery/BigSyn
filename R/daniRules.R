@@ -1,6 +1,6 @@
 #' `%notin%` 
 #' @description negation de `%in%`
-#'@examples
+#' @examples
 #' 1%notin%2:3
 #' 1%notin%1:3
 
@@ -17,8 +17,8 @@
 #' x=partykit::ctree(Petal.Width~.,iris)
 #' daniRules(x)   
 daniRules<-function (x, i = NULL, ...){
-  if (is.null(i)) 
-    i <- partykit::nodeids(x, terminal = TRUE)
+  if (is.null(i)) {
+    i <- partykit::nodeids(x, terminal = TRUE)}
   if (length(i) > 1) {
     ret <- sapply(i, daniRules, x = x)
     names(ret) <- if (is.character(i)) 

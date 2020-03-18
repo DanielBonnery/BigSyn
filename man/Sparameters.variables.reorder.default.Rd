@@ -17,6 +17,8 @@ Sparameters.variables.reorder.default(
 \item{orderwithinorigin}{a list, see example}
 
 \item{id}{a vector of character strings}
+
+\item{extrasort}{(default=NULL) list variables that should be used for an additional ordering}
 }
 \value{
 a list.

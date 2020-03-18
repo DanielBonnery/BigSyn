@@ -4,7 +4,11 @@
 #' @param verbose (default FALSE) if verbose, the formulae to compute the new variables is printed.
 #' @param variables list of variable names roots
 #' @details 
-#' @example
+#' In the case where marginal presence indicator equals 1 
+#' but all cell presence indicators where synthetised to 0, then 
+#' presence indicators and other variables are resampled from synthetic units
+#' with coherent values.
+#' @examples
 #' library(BigSyn)
 #' library(reshape2)
 #' library(data.table)

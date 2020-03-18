@@ -19,3 +19,6 @@ a vector of the same size than terminalnodes, obtained by sampling betweenn the 
 \description{
 Function to sample from a ctree fitted model
 }
+\examples{
+y<-iris$Species;x<-xp<-iris[,-5];fit.model<-fitmodel.ctree(x,y);sample.ctree(x,fit.model)
+}

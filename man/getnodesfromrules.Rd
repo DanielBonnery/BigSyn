@@ -17,3 +17,6 @@ a vector of lenth the number of rows of x indicating the terminal nodes.
 \description{
 Function to get terminal node from a set of partitioning rules and new predictors
 }
+\examples{
+getnodesfromrules(x=iris[1:3,-5],Rules=fitmodel.ctree(x=iris[,-5],y=iris$Species)$Rules)
+}

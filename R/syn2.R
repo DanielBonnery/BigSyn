@@ -41,7 +41,7 @@ sorttablewithingroup<-function(.data,groupvar,sortvar,decreasing=FALSE){
 #' @param variables vector of character strings, indicating names of variables
 #' @param orderwithinorigin a list, see example
 #' @param id a vector of character strings
-#' @extrasort
+#' @param extrasort (default=NULL) list variables that should be used for an additional ordering
 #' @return a list.  
 #' @details After transposition, variable names follow this format: 
 #' origin.variablename_margin1_margin2....lastmargin

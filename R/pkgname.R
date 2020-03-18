@@ -5,8 +5,6 @@
 "_PACKAGE"
 #> [1] "_PACKAGE"
 
-
-
 #' BigSyn: Some non confidential R functions developped for the MLDSC synthetic data project
 #'
 #' The BigSyn package allows to synthesize big hierarchical databases by opposition to just a single small "rectangular" table.
@@ -21,11 +19,14 @@
 #' Generaltransposefunction
 #' GeneralReversetransposefunction
 #' 
-#' @section Shiny Shiny application
+#' @section Shiny application:
 #' runCompare() launches a shiny application to 
 #'
-#'@section General approach
-#'
+#' @section General approach:
+#' A step by step example is provided in the Synthesize_database demo file
+#' 
+#' @examples
+#' demo(Synthesize_database)
 #' @docType package
 #' @name BigSyn
 NULL

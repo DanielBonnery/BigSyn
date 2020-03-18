@@ -136,7 +136,7 @@ fitmodel.ctree<-function(x,y,treeplotsavepath=NULL,...){
 #' @param x a dataframe of predictors
 #' @param Rules a data frame containing 2 character variables: "terminalnode" and "condition"
 #' @return a vector of lenth the number of rows of x indicating the terminal nodes. 
-#' @example 
+#' @examples 
 #' getnodesfromrules(x=iris[1:3,-5],Rules=fitmodel.ctree(x=iris[,-5],y=iris$Species)$Rules)
 
 getnodesfromrules<-function(x,Rules){
@@ -187,7 +187,7 @@ samplefrompool<-function(y,terminalnodes,newterminalnodes){
 #' @param terminalnodes a vector of terminal nodes
 #' @param newterminalnodes: a path to save the graph
 #' @return  a vector of the same size than terminalnodes, obtained by sampling betweenn the values of y such for the same terminal node.  
-#' @example
+#' @examples
 #' y<-iris$Species;x<-xp<-iris[,-5];fit.model<-fitmodel.ctree(x,y);sample.ctree(x,fit.model)
 
 sample.ctree<-function(xp,fit.model,smoothing="none",...){
@@ -318,20 +318,36 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'@examples
 #'
 #'data(TtableA,package="BigSyn")
-#'ATtableA=augmentT_f(TtableA,variablesmax="AA.present",variablespct="AA.cont1")
+#'ATtableA=augmentT_f(TtableA,variablesmax="AA.present",
+#'                    variablespct="AA.cont1")
 #'asis=NULL;notpredictor=asis;nrep=1;synparameters=NULL;
-#'Sparameters=Sparameters.default.f(ref.table=TtableA,asis=asis,notpredictor=notpredictor,preferredmethod="ctree",
-#'defaultsynparameters=c(as.list(synparameters),
-#'eval(formals(Sparameters.default.f)$defaultsynparameters)[setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),c("",names(synparameters)))]));
-#'SATtableA=plyr::rdply(nrep,ATtableA[asis]);samplereportsavepath=NULL;stepbystepsavepath=NULL;doparallel=FALSE;recode=NULL;randomfitorder=TRUE;fitonly=FALSE;
+#'Sparameters=
+#'  Sparameters.default.f(ref.table=TtableA,
+#'                        asis=asis,
+#'                        notpredictor=notpredictor,
+#'                        preferredmethod="ctree",
+#'                        defaultsynparameters=
+#'                           c(as.list(synparameters),
+#'                             eval(formals(Sparameters.default.f)$defaultsynparameters)[
+#'                               setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),
+#'                               c("",names(synparameters)))]));
+#'SATtableA=plyr::rdply(nrep,ATtableA[asis]);
+#'samplereportsavepath=NULL;
+#'stepbystepsavepath=NULL;
+#'doparallel=FALSE;
+#'recode=NULL;
+#'randomfitorder=TRUE;
+#'fitonly=FALSE;
 #'fitmodelsavepath=tempdir()
 #'treeplotsavefolder=tempdir()
 #'sapply(list.files(tempdir(),full.names = TRUE  ),file.remove)
-#'SATtableA<-SDPSYN2(ATtableA,asis=NULL,fitmodelsavepath = fitmodelsavepath,treeplotsavefolder=treeplotsavefolder)
+#'SATtableA<-SDPSYN2(ATtableA,asis=NULL,
+#'                   fitmodelsavepath = fitmodelsavepath,
+#'                   treeplotsavefolder=treeplotsavefolder)
 #'todisplay<-grep("La_La_Lrn1",names(STtableA[[1]]),value=T);
 #'STtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
 #' ##############################################################
-#' Controling that AA.present_La=0=>AA.present_La_Lb=0 in synthetic data
+#' # Controling that AA.present_La=0=>AA.present_La_Lb=0 in synthetic data
 #' library(BigSyn)
 #' library(reshape2)
 #' library(data.table)
@@ -356,13 +372,16 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' variablesmax=variablemax
 #' variablepct="AA.cont1"
 #' variablespct=variablepct
-#' ATtableA<-augmentT_f(TtableA,variablesmax=variablesmax,variablespct=variablespct)
+#' ATtableA<-augmentT_f(TtableA,
+#'                     variablesmax=variablesmax,variablespct=variablespct)
 #' TtableA<-ATtableA
 #' STtableA<-ATtableA[asis]
-#' Sparameters=Sparameters.default.f(ref.table=ATtableA,asis=c("id1a", "id1b"),
+#' Sparameters=Sparameters.default.f(
+#'    ref.table=ATtableA,asis=c("id1a", "id1b"),
 #'    notpredictor=NULL,
 #'    preferredmethod="ctree",
-#'    defaultsynparameters=eval(formals(Sparameters.default.f)$defaultsynparameters))
+#'    defaultsynparameters=
+#'      eval(formals(Sparameters.default.f)$defaultsynparameters))
 #' SATtableA<-BigSyn::SDPSYN2(ATtableA,asis=c("id1a", "id1b"))[[1]]
 #' problems<-SATtableA$AA.present_Lb_La==1&SATtableA$AA.present_Lb==0
 #' mean(problems)
@@ -375,8 +394,6 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' StudyDataTools::ggplot_missing(xxx)}
 #' xx(ATtableA)
 #' xx(SATtableA)
-
-
 
 
 SDPSYN2<-function(TtableA,

@@ -20,7 +20,16 @@ Generaltransposefunction
 GeneralReversetransposefunction
 }
 
-\section{General approach}{
-NA
+\section{Shiny application}{
+
+runCompare() launches a shiny application to
 }
 
+\section{General approach}{
+
+A step by step example is provided in the Synthesize_database demo file
+}
+
+\examples{
+demo(Synthesize_database)
+}
