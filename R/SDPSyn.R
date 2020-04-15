@@ -352,8 +352,9 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'SATtableA<-SDPSYN2(ATtableA,asis=NULL,
 #'                   fitmodelsavepath = fitmodelsavepath,
 #'                   treeplotsavefolder=treeplotsavefolder)
-#'todisplay<-grep("La_La_Lrn1",names(STtableA[[1]]),value=T);
-#'STtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
+#'todisplay<-grep("La_La_Lrn1",names(SATtableA[[1]]),value=T);
+#'SATtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
+#'
 #' ##############################################################
 #' # Controling that AA.present_La=0=>AA.present_La_Lb=0 in synthetic data
 #' library(BigSyn)
