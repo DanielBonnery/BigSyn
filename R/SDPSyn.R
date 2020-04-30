@@ -93,6 +93,8 @@ preparepredictorsforctreefit<-function(x,keep=NULL){
     factorswithtoomanylevels[sapply(x[factorswithtoomanylevels],nlevels)<30]<-FALSE
     x<-x[!factorswithtoomanylevels|is.element(names(x),keep)]}
   x[sapply(x,function(y){length(unique(y))})>1|is.element(names(x),keep)]}
+
+
 #' Function to fit a ctree model.
 #' @param x a dataframe of predictors 
 #' @param y a vector :dependent variable
@@ -104,6 +106,8 @@ preparepredictorsforctreefit<-function(x,keep=NULL){
 #'  "shortlist" a character string giving the names of the variables in x that were used for the classification   
 #' @examples
 #' fitmodel.ctree(x=iris[,-5],y=iris$Species)
+
+# The partykit package is used for fitting ctree
 fitmodel.ctree<-function(x,y,treeplotsavepath=NULL,...){
   #1 convert all posix to numeric
   y2<-y
@@ -296,6 +300,9 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
     save(Sparameters_i,file=wheretosavefit);return(NULL)}else{return(Sparameters_i)}
 }
 
+
+
+# The wrap function to generate SDP.
 #' General SDP function.
 #' 
 #' @param TtableA a dataframe  to synthesize
@@ -345,8 +352,9 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'SATtableA<-SDPSYN2(ATtableA,asis=NULL,
 #'                   fitmodelsavepath = fitmodelsavepath,
 #'                   treeplotsavefolder=treeplotsavefolder)
-#'todisplay<-grep("La_La_Lrn1",names(STtableA[[1]]),value=T);
-#'STtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
+#'todisplay<-grep("La_La_Lrn1",names(SATtableA[[1]]),value=T);
+#'SATtableA[[1]][1:3,todisplay];TtableA[1:3,todisplay]
+#'
 #' ##############################################################
 #' # Controling that AA.present_La=0=>AA.present_La_Lb=0 in synthetic data
 #' library(BigSyn)
