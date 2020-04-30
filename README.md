@@ -2,25 +2,39 @@
 BigSyn
 ======
 
+The 'BigSyn' package allows to synthetise a hierarchical database. All datasets are transposed in a wide format so that they all contain one row per unique identifier, where the identifier is common to all the datasets to synthetise, without being necessarily a primary key of each. The wide formats tables are merged by this identifier, then synthetised. The last step is the back transposition of the synthetised merged transposed
+
 Installation
 ------------
+
+To install with devtools, just run in R:
 
 `devtools::install_github("DanielBonnery/BigSyn")`
 
 Package dependencies
 --------------------
 
-installed.packages()\["BigSyn","Depends"\] `utilities::getDependencies("BigSyn")`
+``` r
+installed.packages()["BigSyn","Depends"]
+```
+
+    ## [1] "R (>= 3.5.0), devtools, ggplot2, sqldf, lattice, printr,\nknitr, reshape2, data.table, rlist, haven, sas7bdat, partykit"
 
 Demo
 ----
 
-To run the demo, just run: `demo(Synthesize_database)`
+To run the demo, just run: `demo(Synthesize_database)` This demo will synthetsize simulated data. The details are given below.
 
 Shiny app to compare Synthetic and original data.
 -------------------------------------------------
 
-To run the Shiny app,just run: `runComnpare()`
+A shiny app was developped to produce graphics to compare synthetic and gold datasets variables distributions.
+
+To run the Shiny app, just run:
+
+`runCompare()`
+
+Figures below are screenshots of the App.
 
 ![](README_files/shinyapp1.png)<!-- -->
 
@@ -75,14 +89,14 @@ X=rbind(tableA,TSTtableA[names(tableA)])
 ggplot2::ggplot(X,aes(factor1,fill=Origin)) + geom_bar(position = "dodge")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
 
 ``` r
-  library(gridExtra)
-      plot1<-ggplot2::ggplot(X,aes(x = cont1,y=cont3,color=Origin,group=Origin))+
-        stat_density_2d(geom = "polygon", aes(alpha = ..level.., fill = Origin))
-      plot2<-plot1+facet_grid(.~Origin)+theme(legend.position="none")
-      grid.arrange(plot2,plot1)
+library(gridExtra)
+plot1<-ggplot2::ggplot(X,aes(x = cont1,y=cont3,color=Origin,group=Origin))+
+  stat_density_2d(geom = "polygon", aes(alpha = ..level.., fill = Origin))
+plot2<-plot1+facet_grid(.~Origin)+theme(legend.position="none")
+grid.arrange(plot2,plot1)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-3-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-4-2.png)
