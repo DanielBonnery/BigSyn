@@ -43,44 +43,57 @@ Figures below are screenshots of the App.
 Step by step demo.
 ------------------
 
+This first code chunck creates 2 tables: TableA and TableB, to mimic a simple database with two datasets. These datasets have a common identifier, the combinaison of the variables `id1a`, and `id1b`.
+
 ``` r
-#Create a simple database with 2 tables: TableA and TableB.
 library(BigSyn)
 data(tableA);
 data(tableB);
 uniqueid<-unique(tableA[,1:2])
 tableB<-cbind(uniqueid,tableB[1:nrow(uniqueid),])
+```
 
-#Transpose the two tables: one row per unique value of id1a, id1b.
+We then transpose the two tables. The transposed tables contain one row per unique value of `id1a`, `id1b`.
 
+``` r
 TKtableA<-BigSyn::Generaltransposefunction(tableA,c("id1a","id1b"),c("id2a","id2b"))
 TKtableB<-BigSyn::Generaltransposefunction(tableB,c("id1a","id1b"),character(0))
+```
 
+We merge the transposed tables by `id1a` and `id1b1`.
 
-#Merge everything
-
+``` r
 Ttable<-merge(TKtableA$TtableA,TKtableB$TtableA, by =c("id1a","id1b"))
+```
 
-#Synthesize
+We synthesize the merged transposed datasets:
 
+``` r
 STtable<-SDPSYN2(Ttable,asis = c("id1a","id1b"),nrep = 1)
+```
 
-#Separate the Synthetic merged transposed table by table of origin
+We separate the synthetic merged transposed datasets by table of origin
 
+``` r
 STtableA<-STtable[[1]][c("id1a","id1b",grep("tableA",names(STtable[[1]]),value = TRUE))]
 STtableB<-STtable[[1]][c("id1a","id1b",grep("tableB",names(STtable[[1]]),value = TRUE))]
+```
 
-#Back transpose
+To finish, we back transpose each unmerged synthetic transposed dataset:
 
+``` r
 TSTtableA<-BigSyn::GeneralReversetransposefunction(TtableA = STtableA,
                                                    key = TKtableA$key)
-
 TSTtableB<-BigSyn::GeneralReversetransposefunction(TtableA = STtableB,
                                                    key = TKtableB$key)
 
 #check the two tables
 #runCompare(TSTtableA,TSTtableB)
 ```
+
+The synthetic data is now ready. We can run comparative analysis on the synthetic and original (gold) data.
+
+We realise a univariate analysis and compare the results obtained on the gold and synthetic datasets.
 
 ``` r
 TSTtableA$Origin="Synthetic"
@@ -89,7 +102,9 @@ X=rbind(tableA,TSTtableA[names(tableA)])
 ggplot2::ggplot(X,aes(factor1,fill=Origin)) + geom_bar(position = "dodge")
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-1.png)
+![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
+
+We realise a bivariate analysis and compare the results obtained on the gold and synthetic datasets.
 
 ``` r
 library(gridExtra)
@@ -99,4 +114,4 @@ plot2<-plot1+facet_grid(.~Origin)+theme(legend.position="none")
 grid.arrange(plot2,plot1)
 ```
 
-![](README_files/figure-markdown_github/unnamed-chunk-4-2.png)
+![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
