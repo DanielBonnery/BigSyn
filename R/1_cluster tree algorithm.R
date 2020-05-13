@@ -4,10 +4,14 @@
 #' adapted function to fit a tree model predicting a binary outcome at individual level taking into account the clustered data structure
 
 
-#@examples
+#' @examples
+#' data(school,package="BigSyn")
+#' school$bscore<-as.factor(school$score<-mean(school$score))
+#' school$schoolid<-as.factor(school$schoolid)
 #' try_model_new <- 
 #'   M.CART.new(formula = bscore ~ female + sclass + schtype + schurban + schdenom,
-#'    data = school, random = "schoolid", lgmodel = "slope", rslope = "+ female + sclass")
+#'    data = school, 
+#'    random = "schoolid", lgmodel = "slope", rslope = "+ female + sclass")
 #' plot(try_model_new$Tree)
 #' try_model_new$deviance
 #' try_model_new$Treewhere
