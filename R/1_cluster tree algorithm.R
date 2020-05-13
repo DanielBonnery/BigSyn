@@ -6,8 +6,6 @@
 
 #' @examples
 #' data(school,package="BigSyn")
-#' school$bscore<-as.factor(school$score<-mean(school$score))
-#' school$schoolid<-as.factor(school$schoolid)
 #' try_model_new <- 
 #'   M.CART.new(formula = bscore ~ female + sclass + schtype + schurban + schdenom,
 #'    data = school, 
@@ -16,11 +14,11 @@
 #' try_model_new$deviance
 #' try_model_new$Treewhere
 #' try_model_new$predMtree
-#' pred <- matrix(NA, nrow(mydata), 1)
+#' pred <- matrix(NA, nrow(school), 1)
 #' pred[try_model_new$predMtree >= 0.5] <- 1
 #' pred[try_model_new$predMtree < 0.5] <- 0
 
-#' confMat <- table(mydata$bscore, pred)
+#' confMat <- table(school$bscore, pred)
 #' (accuracy <- sum(diag(confMat))/sum(confMat))
 
 

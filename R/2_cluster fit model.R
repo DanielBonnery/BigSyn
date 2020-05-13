@@ -2,11 +2,15 @@
 
 
 #' @examples
-#' fitmodel.ctree.new(x = mydata[, 1:9], y = mydata$bscore, y.name = "bscore",
+#' data(school,package="BigSyn")
+#' L<-list(x = school[, 1:9], 
+#' y = school$bscore, y.name = "bscore",
 #'                    random = "schoolid", 
 #'                    lgmodel = "slope",
 #'                    rslope = "+ female + sclass",
-#'                    id = mydata$schoolid)
+#'                    id = school$schoolid)
+#' attach(L)
+#' fit.model<-do.call(fitmodel.ctree.new,L)
 
 
 fitmodel.ctree.new<-function(x,
@@ -52,6 +56,7 @@ fitmodel.ctree.new<-function(x,
        y=y,
        terminalnodes=terminalnodes,
        shortlist=shortlist,
+       EffectModel=part.tree$EffectModel,
        depth=depthx,
        width=nrow(Rules),
        treeplotsavepath=treeplotsavepath)

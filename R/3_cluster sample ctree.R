@@ -1,16 +1,19 @@
 #' sample function
 #' no modifications are made here
 #' @examples
-#' fit.model <- fitmodel.ctree.new(x = mydata[, 1:9], y = mydata$bscore, y.name = "bscore",
+#' data(school,package="BigSyn")
+#' 
+#' L<-list(x = school[, 1:9], 
+#' y = school$bscore, y.name = "bscore",
 #'                    random = "schoolid", 
 #'                    lgmodel = "slope",
 #'                    rslope = "+ female + sclass",
-#'                    id = mydata$schoolid)
-
-#' sample.ctree.new(x = mydata[, 1:9], fit.model)
+#'                    id = school$schoolid)
+#' attach(L)
+#' fit.model<-do.call(fitmodel.ctree.new,L)
+#' sample.ctree.new(x = school[, 1:9], fit.model)
 
 sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
-  
   keep<-names(xp)[sapply(names(xp),function(x){
     any(grepl(pattern = x, x = fit.model$Rules$condition))})]
   xp <- preparepredictorsforctreefit(xp,keep=keep)
