@@ -7,7 +7,7 @@
 #' package1<-NULL
 #' package2<-NULL
 #' runCompare()
-runCompare<-function(
+runCompare3<-function(
   data1=NULL,
   data2=NULL){
   library(shiny)
@@ -23,6 +23,28 @@ runCompare<-function(
   #datas<-datas[is.element(datas$Package,c(package1,package2)),]
   ui <- navbarPage(theme = shinytheme("slate"),
                    title="Visualize and compare datasets tool",
+                   tabPanel("One table", 
+                            tabsetPanel(
+                              tabPanel("R Summary",
+                                       verbatimTextOutput("summary1_1")),
+                              tabPanel("Missing Summary",
+                                       dataTableOutput("missing.summary1")),
+                              tabPanel("Missing plot",
+                                       plotOutput("missingplot1_1")),
+                              tabPanel("Advanced Missing plot",
+                                       splitLayout(uiOutput("variable1_1"),
+                                                   actionButton("doadvmissing1", "Create graphics")),
+                                       plotOutput("advmissingplot1_1")),
+                              tabPanel("Data",dataTableOutput("table1_1")))),
+                   tabPanel("One table, one variable",
+                            splitLayout(uiOutput("variable2_1")),
+                            tabsetPanel(
+                              tabPanel("Density plot",
+                                       plotOutput("densityplot2_1")),
+                              tabPanel("Qplot",
+                                       plotOutput("qplot2_1")),
+                              tabPanel("Contingency table",
+                                       dataTableOutput("contingencytable2_1")))),
                    tabPanel("Two tables",  
                             splitLayout("",h2("Original data"),h2("Transposed or synthesized data"),"",cellWidths =c("5%","45%","45%","5%")),
                             tabsetPanel(
@@ -116,6 +138,65 @@ runCompare<-function(
     ######################################################
     #                      tab 1
     
+    toto1<-eventReactive(input$do1,{
+      table1_1<-get(data(list=input$data1_1,package=input$package1_1))
+      nrow1_1<-nrow(table1_1)
+      if(nrow1_1>1000){sel<-sample(nrow1_1,1000)}else{sel=TRUE}
+      list(table1_1=table1_1[sel,],nrow1_1=nrow1_1)
+    })
+    
+    output$summary1_1 <- renderPrint({summary(data1)})
+    
+    output$variable1_1 <- renderUI({
+      selectInput("variable1_1", label = h4("Choose ordering variable"),
+                  choices=variable1,
+                  selected=1,
+                  multiple=F,
+                  selectize=FALSE)})
+    
+    output$missingplot1_1 <- renderPlot({
+      StudyDataTools::ggplot_missing(data1,reordonne=TRUE)+th
+    })   
+    
+    output$advmissingplot1_1 <- eventReactive(input$doadvmissing1,{
+      StudyDataTools::ggplot_missing2(data1,reordonne=TRUE,keep=input$variable1_1)+th
+    })   
+    
+    output$missing.summary1 <- DT::renderDataTable(StudyDataTools::missing.summary(data1))
+    
+    output$table1_1<- DT::renderDataTable(data1)
+    
+    
+    ######################################################
+    #                      tab 2
+    
+    variable2_1<-reactive({data.frame(variable2_1=names(data1))})
+    output$variable2_1 <- renderUI({
+      selectInput("variable2_1", 
+                  label = "Variable",
+                  choices=variable2,
+                  selected=1,
+                  multiple=F,
+                  selectize=FALSE)
+    })
+    
+    toto2<-reactive({
+      variable2_1<-data1[,input$variable2_1]
+      list(variable2_1=variable2_1)
+    })
+    output$densityplot2_1 <- renderPlot({
+      ggplot2::ggplot(data.frame(x=toto2()$variable2_1),
+                      aes(x = x,color="lightblue"))+
+        xlab(input$variable2_1)+
+        geom_density(show.legend = TRUE,color="lightblue")
+    })   
+    output$qplot2_1 <- renderPlot({
+      ggplot2::ggplot(data.frame(X=toto2()$variable2_1,
+                                 Origin=factor("Original")),
+                      aes(X,Origin,colour=Origin))+geom_count()+colScale+theme(legend.position="none")+ylab("")})   
+    output$contingencytable2_1 <- DT::renderDataTable(
+      as.data.frame(table(toto2()$variable2_1,useNA="ifany")))
+    output$table2_1<- shiny::renderTable(toto2()$table2_1)
     
     
     ######################################################
@@ -162,7 +243,7 @@ runCompare<-function(
                   selectize=FALSE)})
     
     
-      toto4<-reactive({
+    toto4<-reactive({
       variable4_1<-data1[[input$variable4_1]]
       variable4_2<-data2[[input$variable4_2]]
       table4<-rbind(data.frame(Origin="Original",X=variable4_1),
@@ -229,7 +310,7 @@ runCompare<-function(
     
     ######################################################
     #                      tab 5
-
+    
     output$variable5_1_1 <- renderUI({
       selectInput("variable5_1_1", label=NULL,
                   choices=variable1,
