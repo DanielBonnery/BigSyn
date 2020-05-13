@@ -7,7 +7,7 @@
 #' package1<-NULL
 #' package2<-NULL
 #' runCompare()
-runCompare<-function(
+InteractiveCompare<-function(
   data1=NULL,
   data2=NULL){
   library(shiny)
@@ -389,4 +389,4 @@ runCompare<-function(
   shinyApp(ui = ui, server = server)
 }
 
-#runCompare(c("BigSyn","base"),c("BigSyn","ggplot2","plyr"))
+#Compare(c("BigSyn","base"),c("BigSyn","ggplot2","plyr"))

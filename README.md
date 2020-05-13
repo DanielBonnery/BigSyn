@@ -32,7 +32,7 @@ A shiny app was developped to produce graphics to compare synthetic and gold dat
 
 To run the Shiny app, just run:
 
-`runCompare()`
+`BigSyn::InteractiveCompare(BigSyn::tableA,BigSyn::TSTtableA)`
 
 Figures below are screenshots of the App.
 
@@ -53,14 +53,14 @@ uniqueid<-unique(tableA[,1:2])
 tableB<-cbind(uniqueid,tableB[1:nrow(uniqueid),])
 ```
 
-We then transpose the two tables. The transposed tables contain one row per unique value of `id1a`, `id1b`.
+We then transpose the two tables. The transposed tables contain one row per unique value of `id1a`, `id1b`:
 
 ``` r
 TKtableA<-BigSyn::Generaltransposefunction(tableA,c("id1a","id1b"),c("id2a","id2b"))
 TKtableB<-BigSyn::Generaltransposefunction(tableB,c("id1a","id1b"),character(0))
 ```
 
-We merge the transposed tables by `id1a` and `id1b1`.
+We merge the transposed tables by `id1a` and `id1b1`:
 
 ``` r
 Ttable<-merge(TKtableA$TtableA,TKtableB$TtableA, by =c("id1a","id1b"))
@@ -69,10 +69,10 @@ Ttable<-merge(TKtableA$TtableA,TKtableB$TtableA, by =c("id1a","id1b"))
 We synthesize the merged transposed datasets:
 
 ``` r
-STtable<-SDPSYN2(Ttable,asis = c("id1a","id1b"),nrep = 1)
+STtable<-BigSyn::SDPSYN2(Ttable,asis = c("id1a","id1b"),nrep = 1)
 ```
 
-We separate the synthetic merged transposed datasets by table of origin
+We separate the synthetic merged transposed datasets by table of origin:
 
 ``` r
 STtableA<-STtable[[1]][c("id1a","id1b",grep("tableA",names(STtable[[1]]),value = TRUE))]
@@ -86,14 +86,9 @@ TSTtableA<-BigSyn::GeneralReversetransposefunction(TtableA = STtableA,
                                                    key = TKtableA$key)
 TSTtableB<-BigSyn::GeneralReversetransposefunction(TtableA = STtableB,
                                                    key = TKtableB$key)
-
-#check the two tables
-#runCompare(TSTtableA,TSTtableB)
 ```
 
-The synthetic data is now ready. We can run comparative analysis on the synthetic and original (gold) data.
-
-We realise a univariate analysis and compare the results obtained on the gold and synthetic datasets.
+The synthetic data is now ready. We can run comparative analysis on the synthetic and original (gold) data. We realise a univariate analysis and compare the results obtained on the gold and synthetic datasets:
 
 ``` r
 TSTtableA$Origin="Synthetic"
@@ -104,7 +99,7 @@ ggplot2::ggplot(X,aes(factor1,fill=Origin)) + geom_bar(position = "dodge")
 
 ![](README_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
-We realise a bivariate analysis and compare the results obtained on the gold and synthetic datasets.
+We realise a bivariate analysis and compare the results obtained on the gold and synthetic datasets:
 
 ``` r
 library(gridExtra)
@@ -115,3 +110,10 @@ grid.arrange(plot2,plot1)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-10-1.png)
+
+To check interactively the two tables, run:
+
+``` r
+BigSyn::InteractiveCompare(tableA,TSTtableA)
+BigSyn::InteractiveCompare(tableB,TSTtableB)
+```

@@ -1,4 +1,13 @@
-library(BigSyn)
+#library(BigSyn)
+
+
+#' @examples
+#' fitmodel.ctree.new(x = mydata[, 1:9], y = mydata$bscore, y.name = "bscore",
+#'                    random = "schoolid", 
+#'                    lgmodel = "slope",
+#'                    rslope = "+ female + sclass",
+#'                    id = mydata$schoolid)
+
 
 fitmodel.ctree.new<-function(x,
                              y,
@@ -48,11 +57,3 @@ fitmodel.ctree.new<-function(x,
        treeplotsavepath=treeplotsavepath)
 }
 
-
-##### example
-
-fitmodel.ctree.new(x = mydata[, 1:9], y = mydata$bscore, y.name = "bscore",
-                   random = "schoolid", 
-                   lgmodel = "slope",
-                   rslope = "+ female + sclass",
-                   id = mydata$schoolid)

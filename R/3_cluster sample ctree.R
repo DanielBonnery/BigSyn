@@ -1,5 +1,13 @@
-# sample function
-# no modifications are made here
+#' sample function
+#' no modifications are made here
+#' @examples
+#' fit.model <- fitmodel.ctree.new(x = mydata[, 1:9], y = mydata$bscore, y.name = "bscore",
+#'                    random = "schoolid", 
+#'                    lgmodel = "slope",
+#'                    rslope = "+ female + sclass",
+#'                    id = mydata$schoolid)
+
+#' sample.ctree.new(x = mydata[, 1:9], fit.model)
 
 sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
   
@@ -11,14 +19,3 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
   ysyn <-   samplefrompool(fit.model$y,fit.model$terminalnodes,newterminalnodes)
   if (!is.factor(fit.model$y) & smoothing == "density"){ysyn <- synthpop:::syn.smooth(ysyn, fit.model$y)}
   ysyn}
-
-
-# @examples
-
-fit.model <- fitmodel.ctree.new(x = mydata[, 1:9], y = mydata$bscore, y.name = "bscore",
-                   random = "schoolid", 
-                   lgmodel = "slope",
-                   rslope = "+ female + sclass",
-                   id = mydata$schoolid)
-
-sample.ctree.new(x = mydata[, 1:9], fit.model)

@@ -1,14 +1,25 @@
-# a toy data with clustered structure 
-setwd("G:/Shared drives/Clustered Data Synthesization/Data and Code")
-
-mydata <- read.table(file = "5.1.txt", sep = ",", header = TRUE)
-mydata$bscore <- ifelse(mydata$score >= mean(mydata$score), 1, 0)
-mydata$caseid <- as.factor(mydata$caseid)
-mydata$schoolid <- as.factor(mydata$schoolid)
-mydata$bscore <- as.numeric(mydata$bscore)
 
 
-# adapted function to fit a tree model predicting a binary outcome at individual level taking into account the clustered data structure
+
+#' adapted function to fit a tree model predicting a binary outcome at individual level taking into account the clustered data structure
+
+
+#@examples
+#' try_model_new <- 
+#'   M.CART.new(formula = bscore ~ female + sclass + schtype + schurban + schdenom,
+#'    data = school, random = "schoolid", lgmodel = "slope", rslope = "+ female + sclass")
+#' plot(try_model_new$Tree)
+#' try_model_new$deviance
+#' try_model_new$Treewhere
+#' try_model_new$predMtree
+#' pred <- matrix(NA, nrow(mydata), 1)
+#' pred[try_model_new$predMtree >= 0.5] <- 1
+#' pred[try_model_new$predMtree < 0.5] <- 0
+
+#' confMat <- table(mydata$bscore, pred)
+#' (accuracy <- sum(diag(confMat))/sum(confMat))
+
+
 
 M.CART.new <- function(formula, 
                        data, 
@@ -119,21 +130,3 @@ if (min(where) == max(where)) {
   class(result) <- "M.CART"
   return(result)
 }
-
-
-#### example
-
-try_model_new <- M.CART.new(formula = bscore ~ female + sclass + schtype + schurban + schdenom, data = mydata, random = "schoolid", lgmodel = "slope", rslope = "+ female + sclass")
-
-plot(try_model_new$Tree)
-try_model_new$deviance
-try_model_new$Treewhere
-try_model_new$predMtree
-pred <- matrix(NA, nrow(mydata), 1)
-pred[try_model_new$predMtree >= 0.5] <- 1
-pred[try_model_new$predMtree < 0.5] <- 0
-
-confMat <- table(mydata$bscore, pred)
-(accuracy <- sum(diag(confMat))/sum(confMat))
-
-

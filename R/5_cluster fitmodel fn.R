@@ -1,4 +1,12 @@
 # NEW wrapper function for fitting a clustered tree
+#' @examples 
+#' fitmodel.fn.new(method="ctree",x = mydata[, 1:9], y = mydata$bscore, 
+#' y.name = "bscore",
+#' random = "schoolid", 
+#' lgmodel = "slope",
+#' id = mydata$schoolid,
+#' rslope = "+ female + sclass", nbuckets=30, tutu="not a good argument")
+
 
 fitmodel.fn.new<-function(method,x,y,treeplotsavepath=NULL,...){
   do.call((get(paste0("fitmodel.",method,".new"))),
@@ -13,9 +21,3 @@ fitmodel.fn.new<-function(method,x,y,treeplotsavepath=NULL,...){
             good.fit.parameters(method,list(...))))}
 
 
-fitmodel.fn.new(method="ctree",x = mydata[, 1:9], y = mydata$bscore, 
-                y.name = "bscore",
-                random = "schoolid", 
-                lgmodel = "slope",
-                id = mydata$schoolid,
-                rslope = "+ female + sclass", nbuckets=30, tutu="not a good argument")

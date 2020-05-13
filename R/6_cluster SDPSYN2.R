@@ -1,5 +1,63 @@
 # NEW SDPSYN function
 # This is me trying but I don't think it is working properly
+##### example 
+#' @examples
+#' TtableA=mydata
+#' asis=NULL;notpredictor=asis;nrep=1;synparameters=NULL;
+#' Sparameters=
+#'   Sparameters.default.f(ref.table=mydata,
+#'                         asis=asis,
+#'                         notpredictor=notpredictor,
+#'                         preferredmethod="ctree",
+#'                         defaultsynparameters=
+#'                           c(as.list(synparameters),
+#'                             eval(formals(Sparameters.default.f)$defaultsynparameters)[
+#'                               setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),
+#'                                       c("",names(synparameters)))]));
+
+#' STtableA=plyr::rdply(nrep,ATtableA[c("caseid","schdenom")]);
+
+#' samplereportsavepath=NULL;
+#' stepbystepsavepath=NULL;
+#' doparallel=FALSE;
+#' recode=NULL;
+#' randomfitorder=TRUE;
+#' fitonly=FALSE;
+#' fitmodelsavepath=tempdir()
+#' treeplotsavefolder=tempdir()
+#sapply(list.files(tempdir(),full.names = TRUE  ),file.remove)
+
+#' SATtableA <- SDPSYN2.new(TtableA = TtableA, asis = NULL,
+#'                          fitmodelsavepath = fitmodelsavepath,
+#'                          treeplotsavefolder = treeplotsavefolder,
+#'                          STtableA = TtableA)
+
+
+
+
+
+#' View(SATtableA)
+#' summary(SATtableA)
+#' summary(mydata)
+
+#' install.packages("ICCbin")
+#' library(ICCbin)
+#' iccbin(cid = schoolid, y = bscore, data = mydata)
+
+#' m <- glmer(bscore ~ (1 | schoolid), data = mydata, family = binomial, control = glmerControl(optimizer = "bobyqa"),
+#'            nAGQ = 10)
+#' summary(m)
+
+#' m2 <- glmer(bscore ~ (1 | schoolid), data = SATtableA, family = binomial, control = glmerControl(optimizer = "bobyqa"),
+#'             nAGQ = 10)
+#' summary(m2)
+
+#'SATtableB <- SDPSYN2(TtableA = TtableA, asis = NULL,
+#'                     #                         fitmodelsavepath = fitmodelsavepath,
+#'                     treeplotsavefolder = treeplotsavefolder
+#')
+
+
 
 SDPSYN2.new<-function(TtableA,
                       asis=NULL,
@@ -179,63 +237,5 @@ SDPSYN2.new<-function(TtableA,
     return(STtableA)
   }
 }
-
-
-##### example 
-
-TtableA=mydata
-asis=NULL;notpredictor=asis;nrep=1;synparameters=NULL;
-Sparameters=
-  Sparameters.default.f(ref.table=mydata,
-                        asis=asis,
-                        notpredictor=notpredictor,
-                        preferredmethod="ctree",
-                        defaultsynparameters=
-                          c(as.list(synparameters),
-                            eval(formals(Sparameters.default.f)$defaultsynparameters)[
-                              setdiff(names(formals(Sparameters.default.f)$defaultsynparameters),
-                                      c("",names(synparameters)))]));
-
-STtableA=plyr::rdply(nrep,ATtableA[c("caseid","schdenom")]);
-
-samplereportsavepath=NULL;
-stepbystepsavepath=NULL;
-doparallel=FALSE;
-recode=NULL;
-randomfitorder=TRUE;
-fitonly=FALSE;
-fitmodelsavepath=tempdir()
-treeplotsavefolder=tempdir()
-#sapply(list.files(tempdir(),full.names = TRUE  ),file.remove)
-
-SATtableA <- SDPSYN2.new(TtableA = TtableA, asis = NULL,
-                         fitmodelsavepath = fitmodelsavepath,
-                         treeplotsavefolder = treeplotsavefolder,
-                         STtableA = TtableA)
-
-
-
-
-
-View(SATtableA)
-summary(SATtableA)
-summary(mydata)
-
-install.packages("ICCbin")
-library(ICCbin)
-iccbin(cid = schoolid, y = bscore, data = mydata)
-
-m <- glmer(bscore ~ (1 | schoolid), data = mydata, family = binomial, control = glmerControl(optimizer = "bobyqa"),
-           nAGQ = 10)
-summary(m)
-
-m2 <- glmer(bscore ~ (1 | schoolid), data = SATtableA, family = binomial, control = glmerControl(optimizer = "bobyqa"),
-            nAGQ = 10)
-summary(m2)
-
-SATtableB <- SDPSYN2(TtableA = TtableA, asis = NULL,
-                     #                         fitmodelsavepath = fitmodelsavepath,
-                     treeplotsavefolder = treeplotsavefolder
-)
 
 
