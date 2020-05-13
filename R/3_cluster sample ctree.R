@@ -11,7 +11,7 @@
 #'                    id = school$schoolid)
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
-#' sample.ctree.new(x = school[, 1:9], fit.model)
+#' sample.ctree.new(xp = school[, 1:9], fit.model)
 
 sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
   keep<-names(xp)[sapply(names(xp),function(x){
