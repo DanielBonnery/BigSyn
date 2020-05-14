@@ -18,8 +18,14 @@ onlygoodargs<-function(fun,L){L[intersect(names(L),names(formals(fun)))]}
 #' @examples
 #' good.fit.parameters(method="ctree",list(teststat=30,tutu=3))
 good.fit.parameters<-function(method,synparameters){
-  if(method=="ctree"){synparameters[intersect(names(synparameters),
-                                              names(formals(partykit::ctree_control)))]}}
+  if(method=="ctree"){sp<-synparameters[intersect(names(synparameters),
+                                              names(formals(partykit::ctree_control)))]
+  }
+  if(method=="ctree.new"){sp<-synparameters[intersect(names(synparameters),
+                                                  names(formals(fitmodel.ctree.new)))]
+  }
+  
+  return(sp)}
 
 #' Select only arguments for sampling.
 #' @details 
@@ -54,6 +60,27 @@ good.syn.parameters<-function(method,synparameters){
 #' @return a sublist of synparameters, which names are possible arguments of synthpop::syn.ctree if method="ctree".
 #' @examples
 #' fitmodel.fn(method="ctree",x=iris[,-5],y=iris$Species,nbuckets=30,tutu="not a good argument")
+#' ##other example with MM
+#' 
+#' Sparameters_i<-list(
+#'   splits=list(
+#'     split1=list(
+#'       condition=expression((TRUE)),
+#'       method="ctree.new",
+#'       variable="bscore",
+#'       synthparameters=list(
+#'         random = "schoolid", 
+#'         lgmodel = "slope",
+#'         rslope = "+ female + sclass"))))
+#' good.fit.parameters("ctree.new",list(random = "schoolid", 
+#'                                      lgmodel = "slope",
+#'                                      rslope = "+ female + sclass"))
+#' fitmodel.fn("ctree.new",x=school[1:9],y=school[10],random = "schoolid", 
+#'             lgmodel = "slope",
+#'             rslope = "+ female + sclass")
+
+
+#' 
 fitmodel.fn<-function(method,x,y,treeplotsavepath=NULL,...){
   do.call((get(paste0("fitmodel.",method))),
           c(list(x=x,y=y,treeplotsavepath=treeplotsavepath),
@@ -243,6 +270,33 @@ fitmodel.rf<-function(x,y,treeplotsavepath=NULL,...){
 #' Sparameters_i<-Sparameters[["AA.present_La_La_Lrn1"]]; 
 #' treeplotsavefolder=tempdir()
 #' fitthemodel(Sparameters_i,NULL,TtableANAto0,treeplotsavefolder=tempdir())
+#' Example with MM
+#' 
+#' 
+#' variables<-Sparameters.variables.reorder.default(names(school))
+#' notpredictor<-NULL
+#' Sparameters=Sparameters.default.f(
+#'   ref.table=school,asis=asis,
+#'   notpredictor=NULL,
+#'   variables=variables,
+#'   predictors.matrix = predictor.matrix.default(variables)[!is.element(variables, asis), !is.element(variables, notpredictor),drop=FALSE],
+#'   defaultsynparameters=    eval(formals(Sparameters.default.f)$defaultsynparameters))
+
+#' Sparameters_i<-list(
+#'     variable="bscore",
+#'      splits=list(
+#'          split1=list(
+#'         condition=expression((TRUE)),
+#'         method="ctree.new",
+#'         predictors=names(school),
+#'         synthparameters=list(
+#'           random = "schoolid", 
+#'           lgmodel = "slope",
+#'           rslope = "+ female + sclass"))))
+#'           redocomputationsevenifexists=FALSE
+#'           treeplotsavefolder=NULL
+#' TtableANAto0<-school           
+#' fitthemodel(Sparameters_i,NULL,school[1:9])
 
 fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputationsevenifexists=FALSE,treeplotsavefolder=NULL){
   print("________________________________________________________________________",quote = F)
@@ -276,7 +330,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
         Fit=NULL
         Split$method2=Split$method
         print(paste0("------- Method: ",Split$method2),quote = F)
-        if(is.element(Split$method,c("ctree","rf"))){
+        if(is.element(Split$method,c("ctree","rf","ctree.new"))){
           if(sum(selT)>2){
             if(!is.null(treeplotsavefolder)){Split$treeplotsavepath<-file.path(treeplotsavefolder,paste0(Sparameters_i$variable,'_',Split$id,'.pdf'))}
             x=TtableANAto0[selT,Split$predictors,drop=FALSE]
@@ -403,6 +457,60 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' StudyDataTools::ggplot_missing(xxx)}
 #' xx(ATtableA)
 #' xx(SATtableA)
+#' 
+#' 
+#' ## Example with mixed regression model
+#' library(BigSyn)
+#' data(school,package="BigSyn")
+#' asis=names(school)[1:9]
+#' fitmodelsavepath=NULL
+#' treeplotsavefolder=NULL
+#' samplereportsavepath=NULL
+#' stepbystepsavepath=NULL
+#' doparallel=FALSE
+#' recode=NULL
+#' saveeach=NULL
+#' randomfitorder=FALSE
+#' fitonly=FALSE
+
+#' variables<-Sparameters.variables.reorder.default(names(school))
+#' notpredictor<-NULL
+#' Sparameters=Sparameters.default.f(
+#'     ref.table=school,asis=asis,
+#'     notpredictor=NULL,
+#'     variables=variables,
+#'     predictors.matrix = predictor.matrix.default(variables)[!is.element(variables, asis), !is.element(variables, notpredictor),drop=FALSE],
+#'     defaultsynparameters=    eval(formals(Sparameters.default.f)$defaultsynparameters))
+  
+#' Sparameters<-list(
+#'  bscore=list(
+#'  variable="bsscore",
+#'     splits=list(
+#'       split1=list(
+#'         condition=expression((TRUE)),
+#'         method="ctree.new",
+#'         synthparameters=list(
+#'           random = "schoolid", 
+#'           lgmodel = "slope",
+#'           rslope = "+ female + sclass")))))
+#' L<-list(TtableA=school,
+#' asis=names(school)[1:9],
+#' notpredictor=asis,
+#' nrep=1,
+#' synparameters=NULL,
+#' Sparameters=Sparameters,
+#' STtableA=school[1:9],
+#' fitmodelsavepath=NULL,
+#' treeplotsavefolder=NULL,
+#' samplereportsavepath=NULL,
+#' stepbystepsavepath=NULL,
+#' doparallel=TRUE,
+#' recode=NULL,
+#' saveeach=200,
+#' randomfitorder=TRUE,
+#' fitonly=FALSE)
+#' attach(L)
+S_school<-do.call(BigSyn::SDPSYN2,L)[[1]]
 
 
 SDPSYN2<-function(TtableA,

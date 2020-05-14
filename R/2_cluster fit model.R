@@ -1,14 +1,13 @@
 #library(BigSyn)
 
-
+#' @author Yi Feng
 #' @examples
 #' data(school,package="BigSyn")
 #' L<-list(x = school[, 1:9], 
 #' y = school$bscore, y.name = "bscore",
 #'                    random = "schoolid", 
 #'                    lgmodel = "slope",
-#'                    rslope = "+ female + sclass",
-#'                    id = school$schoolid)
+#'                    rslope = "+ female + sclass")
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
 
@@ -19,7 +18,7 @@ fitmodel.ctree.new<-function(x,
                              random = "schoolid", 
                              lgmodel = "slope",
                              rslope = "+ female + sclass",
-                             id,
+                             id=x[random],
                              treeplotsavepath=NULL,...){
   # prepare data
   #1 convert all posix to numeric

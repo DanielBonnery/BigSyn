@@ -1,9 +1,5 @@
-
-
-
 #' adapted function to fit a tree model predicting a binary outcome at individual level taking into account the clustered data structure
-
-
+#' @author Yi Feng
 #' @examples
 #' data(school,package="BigSyn")
 #' try_model_new <- 

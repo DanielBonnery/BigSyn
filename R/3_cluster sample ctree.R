@@ -1,14 +1,15 @@
-#' sample function
-#' no modifications are made here
+#' sample functio no modifications are made here
+#' @author Yi Feng
 #' @examples
 #' data(school,package="BigSyn")
 #' 
-#' L<-list(x = school[, 1:9], 
-#' y = school$bscore, y.name = "bscore",
-#'                    random = "schoolid", 
-#'                    lgmodel = "slope",
-#'                    rslope = "+ female + sclass",
-#'                    id = school$schoolid)
+#' L<-list(xp = school[, 1:9], 
+#'   y = school$bscore, 
+#'   y.name = "bscore",
+#'   random = "schoolid", 
+#'   lgmodel = "slope",
+#'   rslope = "+ female + sclass",
+#'   id = school$schoolid)
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
 #' sample.ctree.new(xp = school[, 1:9], fit.model)
@@ -90,11 +91,11 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
      # probability
      predictFinal2.p <- exp(predictFinal2)/(1+exp(predictFinal2))
      # outcome
-     predictFinal3 <- as.numeric((predictFinal2.p > runif(nrow(newdata),0,1)))
+     sampleFinal3 <- as.numeric((predictFinal2.p > runif(nrow(newdata),0,1)))
      
      
      
 #  if (!is.factor(fit.model$y) & smoothing == "density"){ysyn <- synthpop:::syn.smooth(ysyn, fit.model$y)}
    return(predictFinal)
-   return(predictFinal3)  
+   return(sampleFinal3)  
      }
