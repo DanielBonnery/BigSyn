@@ -85,7 +85,7 @@ if (min(where) == max(where)) {
                            data = newdata,family = binomial,nAGQ = 0, na.action = na.exclude)
       } else {  #random slope model
         glmerfit2 <- lme4::glmer(formula(paste(c(toString(TargetName), 
-                                           paste("as.factor(nodeInd)",paste("(1",rslope,"|",random,")",sep=""),sep="+")),collapse="~")), 
+                                           paste("as.factor(nodeInd)",rslope,paste("(1",rslope,"|",random,")",sep=""),sep="+")),collapse="~")), 
                            data=newdata, family=binomial,nAGQ =0, na.action = na.exclude)
       }
     }
@@ -96,7 +96,7 @@ if (min(where) == max(where)) {
                             ErrorTolerance & iterations<MaxIterations)
     oldlik <- newlik 
     
-# predicted outcome values
+# predicted outcome values using the tree nodes as predictors
     AdjustedTarget2 <- (as.matrix(lme4::getME(glmerfit2,name = "X"))) %*% (as.matrix(lme4::getME(glmerfit2,name="beta")))
     AdjustedTarget<-AdjustedTarget2
     AdjustedTarget[is.na(AdjustedTarget[,1]),1]<-(data[,toString(TargetName)]-
@@ -111,19 +111,21 @@ if (min(where) == max(where)) {
   }
   
   # final prediction
-  preditFinal <- predict(glmerfit2,type="response")
+  # preditFinal <- predict(glmerfit2,type="response")
   
   result <- list(data=data,
                  IterationsUsed=iterations,
                  Random=random, 
                  Rslope=rslope,
                  ErrorTolerance=ErrorTolerance, 
-                 predMtree=preditFinal,
+  #               predMtree=preditFinal,
                  Tree=tree, 
                  Treewhere=where, 
                  EffectModel=glmerfit2, 
-                 RandomEffects= lme4:: ranef(glmerfit2),
-                 BetweenMatrix=as.matrix(Between)*sigma(glmerfit2)^2,
+  #               BetweenMatrix=as.matrix(Between)*sigma(glmerfit2)^2,
+                 FixedEffects=lme4::fixef(glmerfit2),
+                 RandomEffects= lme4::ranef(glmerfit2), 
+  
                  logLik=newlik,
                  AIC=AIC(glmerfit2), BIC=BIC(glmerfit2), deviance=
                    deviance(glmerfit2),
