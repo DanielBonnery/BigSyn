@@ -510,7 +510,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' randomfitorder=TRUE,
 #' fitonly=FALSE)
 #' attach(L)
-S_school<-do.call(BigSyn::SDPSYN2,L)[[1]]
+#' S_school<-do.call(BigSyn::SDPSYN2,L)[[1]]
 
 
 SDPSYN2<-function(TtableA,
