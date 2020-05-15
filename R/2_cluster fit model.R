@@ -56,7 +56,10 @@ fitmodel.ctree.new<-function(x,
        terminalnodes=terminalnodes,
        shortlist=shortlist,
        EffectModel=part.tree$EffectModel,
-       
+       y.name = y.name,
+       random = random, 
+       lgmodel = lgmodel,
+       rslope = rslope,
        FixedEffects=part.tree$FixedEffects,
        RandomEffects=part.tree$RandomEffects,
        

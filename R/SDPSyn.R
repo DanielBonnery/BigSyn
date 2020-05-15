@@ -609,7 +609,8 @@ SDPSYN2<-function(TtableA,
       if(is.null(Split$method2)){Split$method2<-Split$method}
       if(is.element(Split$method2,c("ctree"))){
         #syn.fn<-if(Split$method2=="ctree"){synthpop::syn.ctree}else{synthpop::syn.rf}
-        predictors<-intersect(intersect(Split$predictors,names(STtableANAto0)),names(STtableANAto0))
+        predictors<-intersect(intersect(Split$predictors,names(STtableANAto0)),
+                              names(STtableANAto0))
         xp=STtableANAto0[selS,predictors,drop=FALSE]
         x=TtableANAto0[selT,predictors,drop=FALSE]
         #y0=TtableA[selT,variable]

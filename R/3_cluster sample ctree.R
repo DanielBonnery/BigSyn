@@ -3,7 +3,7 @@
 #' @examples
 #' data(school,package="BigSyn")
 #' 
-#' L<-list(xp = school[, 1:9], 
+#' L<-list(x = school[, 1:9], 
 #'   y = school$bscore, 
 #'   y.name = "bscore",
 #'   random = "schoolid", 
@@ -15,6 +15,7 @@
 #' sample.ctree.new(xp = school[, 1:9], fit.model)
 
 sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
+  id<-xp[fit.model$random]
   keep<-names(xp)[sapply(names(xp),function(x){
     any(grepl(pattern = x, x = fit.model$Rules$condition))})]
   xp <- preparepredictorsforctreefit(xp,keep=keep)
@@ -24,8 +25,8 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
   
   
   nodeInd <- as.factor(newterminalnodes)
-  newdata <- cbind(nodeInd,xp)
-  colnames(newdata)[2] <- random
+  newdata <- cbind(nodeInd=nodeInd,id,xp)
+  colnames(newdata)[2] <- fit.model$random
   
     #--------- method 1: prediction using the lme4 model object  ----------#
   
@@ -99,3 +100,4 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
    return(predictFinal)
    return(sampleFinal3)  
      }
+
