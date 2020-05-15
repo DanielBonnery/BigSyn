@@ -270,9 +270,11 @@ fitmodel.rf<-function(x,y,treeplotsavepath=NULL,...){
 #' Sparameters_i<-Sparameters[["AA.present_La_La_Lrn1"]]; 
 #' treeplotsavefolder=tempdir()
 #' fitthemodel(Sparameters_i,NULL,TtableANAto0,treeplotsavefolder=tempdir())
-#' Example with MM
 #' 
 #' 
+#' ###############Example with MM
+#' data(school,package="BigSyn")
+#' asis=names(school)[1:9] 
 #' variables<-Sparameters.variables.reorder.default(names(school))
 #' notpredictor<-NULL
 #' Sparameters=Sparameters.default.f(
@@ -489,7 +491,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'          split1=list(
 #'         condition=expression((TRUE)),
 #'         method="ctree.new",
-#'         predictors=names(school),
+#'         predictors=names(school)[1:9],
 #'         synthparameters=list(
 #'           random = "schoolid", 
 #'           lgmodel = "slope",

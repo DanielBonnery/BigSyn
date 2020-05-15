@@ -24,7 +24,7 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
   
   
   nodeInd <- as.factor(newterminalnodes)
-  newdata <- cbind(nodeInd,id,xp)
+  newdata <- cbind(nodeInd,xp)
   colnames(newdata)[2] <- random
   
     #--------- method 1: prediction using the lme4 model object  ----------#
