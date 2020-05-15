@@ -73,7 +73,10 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
     }
     
     # node part
-    predict.node <- sum(newdata3[n, grep("nodeInd_",colnames(newdata3))]*fixedEffects.long[n,grep("nodeInd",colnames(fixedEffects.long))])
+    xx=grep("nodeInd_",colnames(newdata3),value=TRUE)
+    yy<-paste0("as.factor(nodeInd)",substr(xx,9,10))
+    #predict.node <- sum(newdata3[n, grep("nodeInd_",colnames(newdata3))]*fixedEffects.long[n,grep("nodeInd",colnames(fixedEffects.long))])
+    predict.node <- sum(newdata3[n, xx]*fixedEffects.long[n,yy])
     
     # other fixed part
     predict.fixed <- 0 
