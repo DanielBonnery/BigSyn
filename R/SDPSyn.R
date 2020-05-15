@@ -462,6 +462,9 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' 
 #' 
 #' ## Example with mixed regression model
+#' 
+#' 
+#' 
 #' library(BigSyn)
 #' data(school,package="BigSyn")
 #' asis=names(school)[1:9]
