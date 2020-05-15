@@ -484,11 +484,12 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
   
 #' Sparameters<-list(
 #'  bscore=list(
-#'  variable="bsscore",
-#'     splits=list(
-#'       split1=list(
+#'     variable="bscore",
+#'      splits=list(
+#'          split1=list(
 #'         condition=expression((TRUE)),
 #'         method="ctree.new",
+#'         predictors=names(school),
 #'         synthparameters=list(
 #'           random = "schoolid", 
 #'           lgmodel = "slope",
@@ -617,6 +618,28 @@ SDPSYN2<-function(TtableA,
         #  originallevels<-levels(y0)
         #  y0<-droplevels(y0)}
         xx<-try(y<-do.call(sample.ctree,c(list(xp=xp,fit.model=Split$fit.model),
+                                          good.syn.parameters(Split$method,Split$synthparameters))))
+        if (class(xx)=="try-error"){
+          print("---- PROBLEM: All values set to missing",quote = F)
+          y<-rep(NA,nrow(STtableA[selS,,drop=FALSE]));problem=xx}
+        #if(logique&Split$method2!="ctree"){y<-(y==1)}
+        #if(syn.cartbug){
+        #  y<-factor(levels(y)[y],levels=originallevels)
+        #}
+      }
+      if(is.element(Split$method2,c("ctree.new"))){
+        #syn.fn<-if(Split$method2=="ctree"){synthpop::syn.ctree}else{synthpop::syn.rf}
+        predictors<-intersect(intersect(Split$predictors,names(STtableANAto0)),names(STtableANAto0))
+        xp=STtableANAto0[selS,predictors,drop=FALSE]
+        x=TtableANAto0[selT,predictors,drop=FALSE]
+        #y0=TtableA[selT,variable]
+        #if(ncol(x)==0){syn.fn=function(y,xp,...){list(Fit="sample",res=sample(y,size=nrow(xp),replace=TRUE))}}
+        #if(logique&Split$method2!="ctree"){y0<-1*y0}
+        #syn.cartbug<-is.factor(y0)
+        #if(syn.cartbug){
+        #  originallevels<-levels(y0)
+        #  y0<-droplevels(y0)}
+        xx<-try(y<-do.call(sample.ctree.new,c(list(xp=xp,fit.model=Split$fit.model),
                                           good.syn.parameters(Split$method,Split$synthparameters))))
         if (class(xx)=="try-error"){
           print("---- PROBLEM: All values set to missing",quote = F)
