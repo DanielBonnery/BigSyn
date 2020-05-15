@@ -44,7 +44,7 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
      
      # parameters
      randomEffects <- cbind(rownames(random.par[[1]]),random.par[[1]])
-     colnames(randomEffects) <- c(random,names(random.par[[1]]))
+     colnames(randomEffects) <- c(fit.model$random,names(random.par[[1]]))
      
      rd <- grep(paste(names(random.par[[1]]),collapse = "|"),names(fixed.par))
      node.d <- grep("node",names(fixed.par))
