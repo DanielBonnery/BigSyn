@@ -505,8 +505,8 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #' nrep=1,
 #' synparameters=NULL,
 #' Sparameters=Sparameters,
-#' STtableA=school[1:9],
-#' fitmodelsavepath=NULL,
+#' STtableA=school[1:10,1:9],
+#' fitmodelsavepath=getwd(),
 #' treeplotsavefolder=NULL,
 #' samplereportsavepath=NULL,
 #' stepbystepsavepath=NULL,
@@ -658,7 +658,7 @@ SDPSYN2<-function(TtableA,
       y=if(Split$method2=="sample"){
         if(sum(selT)>0){
           sample(TtableANAto0[selT,variable],size = nrow(STtableA[selS,,drop=FALSE]),replace=TRUE)}else{rep(TtableANAto0[,variable],nrow(STtableA[selS,,drop=FALSE]))}
-      }else{if(is.element(Split$method2,c("rf","ctree"))){y
+      }else{if(is.element(Split$method2,c("rf","ctree","ctree.new"))){y
       }else{if(Split$method2=="calculus"){with(STtableANAto0[selS,,drop=FALSE],eval(Split$calculus))}}}
       end_time <- Sys.time()
       # list(sel=(1:nrow(STtableA))[selS],
