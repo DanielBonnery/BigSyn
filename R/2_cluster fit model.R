@@ -1,5 +1,3 @@
-#library(BigSyn)
-
 #' @author Yi Feng
 #' @examples
 #' library(BigSyn)
