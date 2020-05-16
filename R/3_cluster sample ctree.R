@@ -8,8 +8,7 @@
 #'   y.name = "bscore",
 #'   random = "schoolid", 
 #'   lgmodel = "slope",
-#'   rslope = "+ female + sclass",
-#'   id = school$schoolid)
+#'   rslope = "+ female + sclass")
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
 #' save(fit.model,file="fit.model.rda")
@@ -74,7 +73,7 @@ sample.ctree.new <- function(xp,fit.model,smoothing="none",...){
     
     # node part
     xx=grep("nodeInd_",colnames(newdata3),value=TRUE)
-    yy<-paste0("as.factor(nodeInd)",substr(xx,9,10))
+    yy<-paste0("as.factor(nodeInd)",gsub("nodeInd_","",xx))
     #predict.node <- sum(newdata3[n, grep("nodeInd_",colnames(newdata3))]*fixedEffects.long[n,grep("nodeInd",colnames(fixedEffects.long))])
     predict.node <- sum(newdata3[n, xx]*fixedEffects.long[n,yy])
     

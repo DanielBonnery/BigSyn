@@ -2,6 +2,7 @@
 
 #' @author Yi Feng
 #' @examples
+#' library(BigSyn)
 #' data(school,package="BigSyn")
 #' L<-list(x = school[, 1:9], 
 #' y = school$bscore, y.name = "bscore",
@@ -18,10 +19,10 @@ fitmodel.ctree.new<-function(x,
                              random = "schoolid", 
                              lgmodel = "slope",
                              rslope = "+ female + sclass",
-                             id=x[random],
                              treeplotsavepath=NULL,...){
   # prepare data
   #1 convert all posix to numeric
+  id=x[random]
   y2<-y
   if(inherits(y2,"POSIXct")|inherits(y2,"POSIXt")){y2<-as.numeric(y2)}
   x2<-preparepredictorsforctreefit(x)
@@ -48,7 +49,8 @@ fitmodel.ctree.new<-function(x,
   # terminal nodes for each observation
   terminalnodes<-getnodesfromrules(x,Rules)
   
-  shortlist <- if(ncol(x2)==0){character(0)}else{names(x2)[sapply(names(x2),grepl,x=splitnodeconditionsmerge)]} 
+  shortlist <- if(ncol(x2)==0){character(0)}else{names(x2)[
+    sapply(names(x2),grepl,x=splitnodeconditionsmerge)]} 
   
   # output results
   list(Rules=Rules,
