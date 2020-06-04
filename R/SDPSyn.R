@@ -341,7 +341,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
             #  originallevels<-levels(y0)
             #  y0<-droplevels(y0)}
             Split$fit.model<-try(fitmodel.fn(Split$method,x,y0,treeplotsavepath=Split$treeplotsavepath,Split$synthparameters));
-            if (class(Split$fit.model)=="try-error"){
+            if (is.element("try-error",class(Split$fit.model))){
               print("------ Error -  method changed to sample",quote = F)
               Split$method2="sample"}}else{
                 print("------ warning -  cell<3 - method changed to sample",quote = F)
@@ -589,7 +589,7 @@ SDPSYN2<-function(TtableA,
     if(!is.null(fitmodelsavepath)){
       wheretosavefit<-file.path(fitmodelsavepath,paste0(variable,".rda"))
       x<-try(load(wheretosavefit));
-      if(class(x)=="try-error"){
+      if(is.element("try-error",class(x))){
         print(paste0("-- could not load ",wheretosavefit,": have to refit"),quote = F)
         try(file.remove(wheretosavefit))
         fitthemodel(Sparameters[[variable]],fitmodelsavepath,TtableANAto0)
@@ -625,7 +625,7 @@ SDPSYN2<-function(TtableA,
         #  y0<-droplevels(y0)}
         xx<-try(y<-do.call(sample.ctree,c(list(xp=xp,fit.model=Split$fit.model),
                                           good.syn.parameters(Split$method,Split$synthparameters))))
-        if (class(xx)=="try-error"){
+        if (is.element("try-error",class(xx))){
           print("---- PROBLEM: All values set to missing",quote = F)
           y<-rep(NA,nrow(STtableA[selS,,drop=FALSE]));problem=xx}
         #if(logique&Split$method2!="ctree"){y<-(y==1)}
@@ -647,7 +647,7 @@ SDPSYN2<-function(TtableA,
         #  y0<-droplevels(y0)}
         xx<-try(y<-do.call(sample.ctree.new,c(list(xp=xp,fit.model=Split$fit.model),
                                           good.syn.parameters(Split$method,Split$synthparameters))))
-        if (class(xx)=="try-error"){
+        if (is.element("try-error",class(xx))){
           print("---- PROBLEM: All values set to missing",quote = F)
           y<-rep(NA,nrow(STtableA[selS,,drop=FALSE]));problem=xx}
         #if(logique&Split$method2!="ctree"){y<-(y==1)}
