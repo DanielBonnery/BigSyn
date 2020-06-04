@@ -6,13 +6,10 @@
 #' y = school$bscore, y.name = "bscore",
 #'                    random = "schoolid", 
 #'                    lgmodel = "slope",
-<<<<<<< HEAD
 #'                    fixed = "+ female + sclass",
 #'                    rslope = "+ female + sclass",
 #'                    id = school$schoolid)
-=======
 #'                    rslope = "+ female + sclass")
->>>>>>> 7d08121e3fff90deb57cad7fba7e29db7f87df07
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
 #' fit.model$FixedEffects
