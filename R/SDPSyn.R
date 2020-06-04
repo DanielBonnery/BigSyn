@@ -349,6 +349,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
 #'fitmodelsavepath=tempdir()
 #'treeplotsavefolder=tempdir()
 #'sapply(list.files(tempdir(),full.names = TRUE  ),file.remove)
+#'
 #'SATtableA<-SDPSYN2(ATtableA,asis=NULL,
 #'                   fitmodelsavepath = fitmodelsavepath,
 #'                   treeplotsavefolder=treeplotsavefolder)

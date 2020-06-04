@@ -9,6 +9,7 @@
 #' try_model_new <- 
 #'   M.CART.new(formula = bscore ~ female + sclass + schtype + schurban + schdenom,
 #'    data = school, 
+#'    fixed = "+ female + sclass + schtype",
 #'    random = "schoolid", lgmodel = "slope", rslope = "+ female + sclass")
 #' plot(try_model_new$Tree)
 #' try_model_new$deviance
@@ -17,15 +18,22 @@
 #' pred <- matrix(NA, nrow(school), 1)
 #' pred[try_model_new$predMtree >= 0.5] <- 1
 #' pred[try_model_new$predMtree < 0.5] <- 0
-
+#' 
 #' confMat <- table(school$bscore, pred)
 #' (accuracy <- sum(diag(confMat))/sum(confMat))
-
-
+#' 
+#' 
+#' try_model_new2 <- 
+#'   M.CART.new(formula = bscore ~ female + sclass + schtype + schurban,
+#'    data = school, 
+#'    fixed = "+ female + sclass",
+#'    random = "schoolid", lgmodel = "int", rslope = NULL)
+#' plot(try_model_new2$Tree)
 
 M.CART.new <- function(formula, 
                        data, 
                        random = "SID",
+                       fixed = "+X1+X2",
                        rslope = "+X1+X2", 
                        lgmodel = "int", 
                        ErrorTolerance = 0.00001, 
@@ -74,18 +82,18 @@ newdata[, "nodeInd"] <- where            #save as variable
 # predict the outcome using multilevel logistic regression with terminal nodes as a predictor
 if (min(where) == max(where)) {   
       glmerfit2 <- lme4::glmer(formula(paste(c(toString(TargetName),
-                                        paste("1 + (1|",random,")",
+                                        paste("1", fixed, " + (1|",random,")",
                                               sep = "")),collapse = "~")), 
                         data = newdata, family = binomial, nAGQ = 0, na.action = na.exclude)
     } else {
       if (lgmodel == "int") {   #random intercept model
         glmerfit2 <- lme4::glmer(formula(paste(c(toString(TargetName),
-                                           paste("as.factor(nodeInd)+(1|",random,")",
+                                           paste("as.factor(nodeInd)", fixed, "+(1|",random,")",
                                                  sep="")),collapse = "~")), 
                            data = newdata,family = binomial,nAGQ = 0, na.action = na.exclude)
       } else {  #random slope model
         glmerfit2 <- lme4::glmer(formula(paste(c(toString(TargetName), 
-                                           paste("as.factor(nodeInd)",rslope,paste("(1",rslope,"|",random,")",sep=""),sep="+")),collapse="~")), 
+                                           paste("as.factor(nodeInd)",fixed,paste("(1",rslope,"|",random,")",sep=""),sep="+")),collapse="~")), 
                            data=newdata, family=binomial,nAGQ =0, na.action = na.exclude)
       }
     }
