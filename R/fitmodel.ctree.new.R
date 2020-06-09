@@ -5,20 +5,36 @@
 #' library(BigSyn)
 #' data(school,package="BigSyn")
 #' L<-list(x = school[, 1:9], 
-#' y = school$bscore, 
-#' y.name = "bscore",
-#' random = "schoolid", 
-#' lgmodel = "slope",
-#' rslope = "+ female + sclass")
+#'         y = school$bscore, 
+#'         y.name = "bscore",
+#'        random = "schoolid", 
+#'        lgmodel = "slope",
+#'        fixed = "+ female + sclass",
+#'        rslope = "+ female + sclass",
+#'        id = school$schoolid)
+#'        rslope = "+ female + sclass")
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
+#' fit.model$FixedEffects
+#' 
+#' L<-list(x = school[, 1:9], 
+#' y = school$bscore, y.name = "bscore",
+#'                    random = "schoolid", 
+#'                    lgmodel = "int",
+#'                    fixed = "+ female + sclass",
+#'                    rslope = NULL,
+#'                    id = school$schoolid)
+#' attach(L)
+#' fit.model2<-do.call(fitmodel.ctree.new,L)
+#' fit.model2$FixedEffects
 
 
 fitmodel.ctree.new<-function(x,
                              y,
                              y.name = "bscore",
                              random = "schoolid", 
-            ++                 lgmodel = "slope",
+                             lgmodel = "slope",
+                             fixed = "+ female + sclass",
                              rslope = "+ female + sclass",
                              treeplotsavepath=NULL,...){
   # prepare data
@@ -32,7 +48,8 @@ fitmodel.ctree.new<-function(x,
   colnames(data)[ncol(data)] <- random
   
   # fit the clustered tree algorithm
-  part.tree <- M.CART.new(formula = formula(paste(toString(y.name), "~", noquote(paste(colnames(x2),collapse="+")))), random = random, lgmodel = lgmodel, data = data, rslope = rslope)
+  part.tree <- M.CART.new(formula = formula(paste(toString(y.name), "~", noquote(paste(colnames(x2),collapse="+")))), 
+                          fixed = fixed, random = random, lgmodel = lgmodel, data = data, rslope = rslope)
   # extract the tree
   datact <- part.tree$Tree
   depthx<-try(treedepth(datact))
