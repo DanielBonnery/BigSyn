@@ -1,18 +1,19 @@
 #' @author Yi Feng
 #' @param x a data.frame
 #' @param y a vector. Same length as `nrow(x)`
+#' @param synthparameters a list 
 #' @examples
 #' library(BigSyn)
 #' data(school,package="BigSyn")
 #' L<-list(x = school[, 1:9], 
 #'         y = school$bscore, 
+#'         synthparameters=list(
 #'         y.name = "bscore",
 #'        random = "schoolid", 
 #'        lgmodel = "slope",
 #'        fixed = "+ female + sclass",
 #'        rslope = "+ female + sclass",
-#'        id = school$schoolid)
-#'        rslope = "+ female + sclass")
+#'        id = school$schoolid))
 #' attach(L)
 #' fit.model<-do.call(fitmodel.ctree.new,L)
 #' fit.model$FixedEffects
@@ -36,14 +37,16 @@
 
 fitmodel.ctree.new<-function(x,
                              y,
+                             synthparameters=list(
                              y.name = "bscore",
                              random = "schoolid", 
                              lgmodel = "slope",
                              fixed = "+ female + sclass",
-                             rslope = "+ female + sclass",
+                             rslope = "+ female + sclass"),
                              treeplotsavepath=NULL,...){
   # prepare data
   #1 convert all posix to numeric
+  attach(synthparameters)
   id=x[random]
   y2<-y
   if(inherits(y2,"POSIXct")|inherits(y2,"POSIXt")){y2<-as.numeric(y2)}
