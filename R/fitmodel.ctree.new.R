@@ -27,6 +27,11 @@
 #' attach(L)
 #' fit.model2<-do.call(fitmodel.ctree.new,L)
 #' fit.model2$FixedEffects
+#' L$y<-factor(L$y)
+#' fit.model2<-do.call(fitmodel.ctree.new,L)
+#' L$y<-paste0(levels(L$y)[L$y],"")
+#' fit.model2<-do.call(fitmodel.ctree.new,L)
+
 
 
 fitmodel.ctree.new<-function(x,

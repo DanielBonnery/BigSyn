@@ -25,6 +25,14 @@
 #'    fixed = "+ female + sclass",
 #'    random = "schoolid", lgmodel = "int", rslope = NULL)
 #' plot(try_model_new2$Tree)
+#' 
+#' school$bscore<-factor(school$bscore)
+#' try_model_new3 <- 
+#'   M.CART.new(formula = bscore ~ female + sclass + schtype + schurban,
+#'    data = school, 
+#'    fixed = "+ female + sclass",
+#'    random = "schoolid", lgmodel = "int", rslope = NULL)
+
 
 
 M.CART.new <- function(formula, 
@@ -53,7 +61,7 @@ M.CART.new <- function(formula,
   originaldata$random<-rep(0,TotalObs)
   originaldata$TID <- originaldata[, random]    
   
-  for (i in 1:length(summary(originaldata$TID))) {
+  for (i in unique(originaldata$TID)) {
     originaldata$random[originaldata$TID == i] <-
       mean(originaldata[originaldata$TID == i,toString(TargetName)])-
       mean(originaldata[,toString(TargetName)])
