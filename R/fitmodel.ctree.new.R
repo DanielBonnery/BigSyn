@@ -32,17 +32,25 @@
 #' fit.model2<-do.call(fitmodel.ctree.new,L)
 #' L$y<-paste0(levels(L$y)[L$y],"")
 #' fit.model2<-do.call(fitmodel.ctree.new,L)
+#' synth.parameters<-list(y.name = "bscore",
+#'                    random = "schoolid", 
+#'                    lgmodel = "int",
+#'                    fixed = "+ female + sclass",
+#'                    rslope = NULL,
+#'                    id = school$schoolid)
+#' do.call(fitmodel.ctree.new,
+#' c(list(x=x,y=y,treeplotsavepath=NULL),
+#' good.fit.parameters(method,c(fit.parameters,list(...))))
 
 
 
 fitmodel.ctree.new<-function(x,
                              y,
-                             synthparameters=list(
                              y.name = "bscore",
                              random = "schoolid", 
                              lgmodel = "slope",
                              fixed = "+ female + sclass",
-                             rslope = "+ female + sclass"),
+                             rslope = "+ female + sclass",
                              treeplotsavepath=NULL,...){
   # prepare data
   #1 convert all posix to numeric

@@ -17,6 +17,7 @@ onlygoodargs<-function(fun,L){L[intersect(names(L),names(formals(fun)))]}
 #' @return a sublist of synparameters, which names are possible arguments of partykit::ctree_control if method="ctree".
 #' @examples
 #' good.fit.parameters(method="ctree",list(teststat=30,tutu=3))
+#' good.fit.parameters(method="ctree.new",list(rslope="test"))
 good.fit.parameters<-function(method,synparameters){
   if(method=="ctree"){sp<-synparameters[intersect(names(synparameters),
                                               names(formals(partykit::ctree_control)))]
@@ -60,6 +61,7 @@ good.syn.parameters<-function(method,synparameters){
 #' @return a sublist of synparameters, which names are possible arguments of synthpop::syn.ctree if method="ctree".
 #' @examples
 #' fitmodel.fn(method="ctree",x=iris[,-5],y=iris$Species,nbuckets=30,tutu="not a good argument")
+#' fitmodel.fn(method="ctree.new",x=iris[,-5],y=iris$Species,nbuckets=30,tutu="not a good argument")
 #' ##other example with MM
 #' 
 #' Sparameters_i<-list(
@@ -81,10 +83,10 @@ good.syn.parameters<-function(method,synparameters){
 
 
 #' 
-fitmodel.fn<-function(method,x,y,treeplotsavepath=NULL,...){
+fitmodel.fn<-function(method,x,y,treeplotsavepath=NULL,fit.parameters=NULL,...){
   do.call((get(paste0("fitmodel.",method))),
           c(list(x=x,y=y,treeplotsavepath=treeplotsavepath),
-            good.fit.parameters(method,list(...))))}
+            good.fit.parameters(method,c(fit.parameters,list(...)))))}
 
 #' Sample a model with a specific function
 #' @param method a string. currently only method="ctree".
@@ -340,7 +342,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
             #if(is.factor(y0)){
             #  originallevels<-levels(y0)
             #  y0<-droplevels(y0)}
-            Split$fit.model<-try(fitmodel.fn(Split$method,x,y0,treeplotsavepath=Split$treeplotsavepath,Split$synthparameters));
+            Split$fit.model<-try(fitmodel.fn(Split$method,x,y0,treeplotsavepath=Split$treeplotsavepath,fit.parameters=Split$synthparameters));
             if (is.element("try-error",class(Split$fit.model))){
               print("------ Error -  method changed to sample",quote = F)
               Split$method2="sample"}}else{
