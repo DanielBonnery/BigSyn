@@ -54,7 +54,7 @@ fitmodel.ctree.new<-function(x,
                              treeplotsavepath=NULL,...){
   # prepare data
   #1 convert all posix to numeric
-  attach(synthparameters)
+  #attach(synthparameters)
   id=x[random]
   y2<-y
   if(inherits(y2,"POSIXct")|inherits(y2,"POSIXt")){y2<-as.numeric(y2)}
