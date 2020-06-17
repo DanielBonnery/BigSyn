@@ -33,8 +33,6 @@
 #'    fixed = "+ female + sclass",
 #'    random = "schoolid", lgmodel = "int", rslope = NULL)
 
-
-
 M.CART.new <- function(formula, 
                        data, 
                        random = "SID",
@@ -49,7 +47,8 @@ M.CART.new <- function(formula,
   
   TotalObs <- dim(data)[1]                      
   originaldata <- data
-  
+
+  print("we are at 1")  
   Predictors <- paste(attr(terms(formula), "term.labels"), collapse = "+")
   TargetName <- formula[[2]]
   if (length(TargetName) > 1) TargetName <- TargetName[3]
@@ -66,15 +65,20 @@ M.CART.new <- function(formula,
       mean(originaldata[originaldata$TID == i,toString(TargetName)])-
       mean(originaldata[,toString(TargetName)])
   }    #cluster mean - grand mean (u)
+  print("we are at 2")  
   
   AdjustedTarget <-data[, toString(TargetName)]-originaldata$random 
   
   ContinueCondition <- TRUE
   iterations <- 0
   oldlik <- 0
+  print("we are at 3")  
+  
   
   while (ContinueCondition) {
     iterations <- iterations + 1
+    print(paste0("we are at 4 :",iterations))  
+
     newdata[, "AdjustedTarget"] <- as.factor(AdjustedTarget)
 
 # predict the adjusted target (individual-level variability free of cluster random effects)    
@@ -109,6 +113,7 @@ if (min(where) == max(where)) {
 newlik<-logLik(glmerfit2)   #loglikelihood
 ContinueCondition <- (abs(newlik - oldlik) >
                         ErrorTolerance & iterations<MaxIterations)
+print(paste0("we are at 5 :",iterations," absdiff: ",abs(newlik - oldlik)))  
 oldlik <- newlik 
 
 # predicted outcome values using the tree nodes as predictors
@@ -117,6 +122,7 @@ oldlik <- newlik
     AdjustedTarget[is.na(AdjustedTarget[,1]),1]<-(data[,toString(TargetName)]-
                                                     originaldata$random)[is.na(AdjustedTarget[,1])]
   }  #end of iteration if converged
+  print(paste0("we are at 6"))  
   
   if (lgmodel!="int") {
     Between<-cbind(lme4::VarCorr(glmerfit2)[[1]][1:2],
