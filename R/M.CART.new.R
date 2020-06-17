@@ -77,7 +77,7 @@ M.CART.new <- function(formula,
   
   while (ContinueCondition) {
     iterations <- iterations + 1
-    print(paste0("we are at 4 :",iterations))  
+    print(paste0("we are at 4.0 :",iterations))  
 
     newdata[, "AdjustedTarget"] <- as.factor(AdjustedTarget)
 
@@ -86,6 +86,7 @@ tree <- partykit::ctree(formula = formula(paste(c("AdjustedTarget", Predictors),
                         data = as.data.frame(newdata), 
                         control = partykit::ctree_control(minbucket = minbucket, mincriterion = mincriterion))
 if (verbose) print(tree)
+print(paste0("we are at 4.1 :",iterations))  
 
 where <- predict(tree, type = "node")    #which terminal node 
 newdata[, "nodeInd"] <- where            #save as variable
@@ -109,6 +110,7 @@ if (min(where) == max(where)) {
   }
 }
 
+print(paste0("we are at 4.2 :",iterations))  
 
 newlik<-logLik(glmerfit2)   #loglikelihood
 ContinueCondition <- (abs(newlik - oldlik) >
