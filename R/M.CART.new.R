@@ -49,6 +49,15 @@ M.CART.new <- function(formula,
   originaldata <- data
 
   print("we are at 1")  
+  print(paste0("           formula is:",formula))
+  print(paste0("           random is :",random))
+  print(paste0("           fixed is :",fixed))
+  print(paste0("           rslope is :",rslope))
+  print(paste0("           ErrorTolerance is :",ErrorTolerance))
+  print(paste0("           MaxIterations is :",MaxIterations))
+  print(paste0("           verbose is :",verbose))
+  print(paste0("           minbucket is :",minbucket))
+  print(paste0("           mincriterion is :",mincriterion))
   Predictors <- paste(attr(terms(formula), "term.labels"), collapse = "+")
   TargetName <- formula[[2]]
   if (length(TargetName) > 1) TargetName <- TargetName[3]
