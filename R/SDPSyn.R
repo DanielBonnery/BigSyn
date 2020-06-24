@@ -343,12 +343,7 @@ fitthemodel<-function(Sparameters_i,fitmodelsavepath,TtableANAto0,redocomputatio
             #  originallevels<-levels(y0)
             #  y0<-droplevels(y0)}
             Split$fit.model<-try(
-              fitmodel.fn(Split$method,
-                          x,y0,
-                          treeplotsavepath=
-                            Split$treeplotsavepath,
-                          fit.parameters=
-                            Split$synthparameters));
+              fitmodel.fn(Split$method,x,y0,treeplotsavepath=Split$treeplotsavepath,fit.parameters=Split$synthparameters));
             if (is.element("try-error",class(Split$fit.model))){
               print("------ Error -  method changed to sample",quote = F)
               Split$method2="sample"}}else{
